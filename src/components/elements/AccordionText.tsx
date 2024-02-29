@@ -1,7 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import Typography from "@mui/material/Typography";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import { Box } from "@mui/material";
 
 interface AccordionTextProps {
   text: string;
@@ -13,34 +19,20 @@ const AccordionText = ({ text }: AccordionTextProps) => {
     setOpen(!isOpen);
   };
   return (
-    <div className="text-center bg-slate-100 rounded">
-      <button
-        type="button"
-        onClick={openHandler}
-        className="cursor-pointer w-full"
-      >
-        {isOpen ? (
-          <>
-            <div className="text-left">{text}</div>
-            <Image
-              src="/images/uparrow.png"
-              height={15}
-              width={15}
-              alt="上矢印"
-              className="inline"
-            />
-          </>
-        ) : (
-          <Image
-            src="/images/downarrow.png"
-            height={15}
-            width={15}
-            alt="下矢印"
-            className="inline"
-          />
-        )}
-      </button>
-    </div>
+    <Box sx={{ padding: "4px" }}>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ArrowDownwardIcon />}
+          aria-controls="panel1-content"
+          id="panel1-header"
+        >
+          <Typography>メモ</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>{text}</Typography>
+        </AccordionDetails>
+      </Accordion>
+    </Box>
   );
 };
 

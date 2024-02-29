@@ -1,6 +1,10 @@
 import TripList from "@/features/trips/TripList/TripList";
-import Image from "next/image";
+import { Container } from "@mui/material";
 
 export default function Home() {
-  return <TripList />;
+  return (
+    <Container maxWidth="sm">
+      <TripList />
+    </Container>
+  );
 }
