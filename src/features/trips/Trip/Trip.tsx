@@ -1,29 +1,27 @@
-import AccordionText from "@/components/elements/AccordionText";
-import { Prefecture, Trip } from "@/types";
-import Image from "next/image";
-import { Box, backdropClasses } from "@mui/material";
-import { ImageCard } from "@/components/elements";
+"use client";
+
+import { PrefectureType, TripType } from "@/types";
+import { Box } from "@mui/material";
+import { LinkImageCard } from "@/components/elements";
 
 interface TripProps {
-  trip: Trip;
-  prefecture: Prefecture;
+  trip: TripType;
+  prefecture: PrefectureType;
 }
-interface PrefectureProps {}
 
 const Trip = ({ trip, prefecture }: TripProps) => {
   return (
-    <Box
-      sx={[
-        { borderRadius: "10px", cursor: "pointer" },
-        { "&:hover": { opacity: "0.8" } },
-      ]}
-    >
-      {trip.ID}
-      <ImageCard
+    <Box>
+      <LinkImageCard
+        id={trip.ID}
+        createdat={trip.CreatedAt.split("T")[0]}
         title={trip.title}
-        startdate={trip.startdate.split("T")[0]}
-        enddate={trip.enddate.split("T")[0]}
+        start={trip.startdate.split("T")[0]}
+        end={trip.enddate.split("T")[0]}
         memo={trip.memo}
+        src={trip.imagepath}
+        spot={prefecture.name}
+        href={`trip/${trip.ID}`}
       />
     </Box>
   );

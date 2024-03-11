@@ -1,4 +1,4 @@
-export default interface Trip {
+export default interface TripType {
   ID: number;
   CreatedAt: string;
   UpdatedAt: string;

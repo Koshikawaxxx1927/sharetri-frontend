@@ -1,4 +1,4 @@
-export default interface Spot {
+export default interface SpotType {
   ID: number;
   CreatedAt: string;
   UpdatedAt: string;

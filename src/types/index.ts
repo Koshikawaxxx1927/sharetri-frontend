@@ -1,5 +1,5 @@
-import Trip from "./trip";
-import Spot from "./spot";
-import Prefecture from "./prefecture";
+import TripType from "./trip";
+import SpotType from "./spot";
+import PrefectureType from "./prefecture";
 
-export type { Trip, Spot, Prefecture };
+export type { TripType, SpotType, PrefectureType };
