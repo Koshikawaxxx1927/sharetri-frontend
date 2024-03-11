@@ -3,7 +3,7 @@ import SpotScroll from "./spots/SpotScroller/SpotScroll/SpotScroll";
 import Trip from "./trips/Trip/Trip";
 import TripList from "./trips/TripList/TripList";
 import TripScroll from "./trips/TripScroll/TripScroll";
-import SpotTabs from "./spots/SpotTabs.tsx/SpotTabs";
+import SpotTabs from "./spots/SpotTabs/SpotTabs";
 import SpotListTab from "./spots/SpotScroller/SpotListTab/SpotListTab";
 import SpotFlowTab from "./spots/SpotTimeFlow/SpotFlowTab/SpotFlowTab";
 import SpotTimeline from "./spots/SpotTimeFlow/SpotTimeline/SpotTimeline";

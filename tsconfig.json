@@ -29,7 +29,8 @@
     ".next/types/**/*.ts",
     "src/features/spots/SpotTimeFlow/SpotFlowTab",
     "src/features/spots/SpotScroller/SpotListTab",
-    "src/features/spots/SpotTimeFlow/SpotTimeline"
+    "src/features/spots/SpotTimeFlow/SpotTimeline",
+    "src/features/spots/SpotTabs"
   ],
   "exclude": ["node_modules"]
 }
