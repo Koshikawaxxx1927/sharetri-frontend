@@ -20,7 +20,7 @@ const SpotListTab = ({
   setBatch,
 }: SpotListTabProps) => {
   return (
-    <Box>
+    <Box sx={{ height: "85vh", overflowY: "scroll" }}>
       <TabPanel value={value} index={0}>
         <SpotScroll
           spots={spots}

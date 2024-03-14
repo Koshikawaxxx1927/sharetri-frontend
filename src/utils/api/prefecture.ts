@@ -1,6 +1,8 @@
-import { Prefecture } from "@/types/index";
+import { PrefectureType } from "@/types/index";
 
-const getPrefecture = async (prefectureid: string): Promise<Prefecture[]> => {
+const getPrefecture = async (
+  prefectureid: string
+): Promise<PrefectureType[]> => {
   const res = await fetch(`http://localhost:8080/prefecture/${prefectureid}`, {
     cache: "no-store",
   });
@@ -8,7 +10,7 @@ const getPrefecture = async (prefectureid: string): Promise<Prefecture[]> => {
   return data.prefecture;
 };
 
-const getPrefectureList = async (): Promise<Prefecture[]> => {
+const getPrefectureList = async (): Promise<PrefectureType[]> => {
   const res = await fetch(`http://localhost:8080/prefecturelist`, {
     cache: "no-store",
   });

@@ -14,13 +14,15 @@ interface SpotTimelineProps {
   spotsPerPage: number;
   batch: number;
   setBatch: (value: SetStateAction<number>) => void;
+  handleChange: (event: React.SyntheticEvent, newValue: number) => void;
 }
 
-export default function SpotTimeline({
+export default function zSpotTimeline({
   spots,
   spotsPerPage,
   batch,
   setBatch,
+  handleChange,
 }: SpotTimelineProps) {
   const ref = useRef<HTMLHeadingElement>(null);
   const updateBatch = (
@@ -50,10 +52,12 @@ export default function SpotTimeline({
         return (
           <TimelineElement
             key={spot.ID}
+            id={spot.ID.toString()}
             starttime={spot.starttime.split("T")[1].split(".")[0]}
             endtime={spot.endtime.split("T")[1].split(".")[0]}
             name={spot.name}
             memo={spot.memo}
+            handleChange={handleChange}
           >
             <FastfoodIcon />
           </TimelineElement>

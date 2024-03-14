@@ -1,10 +1,11 @@
 "use client";
 
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import React, { SetStateAction, useRef } from "react";
 import { Spot } from "@/features";
 import { SpotType } from "@/types";
 import { useIntersectionObserver } from "@/hooks";
+import { ModalButton } from "@/components/elements";
 
 interface SpotScrollProps {
   spots: SpotType[];
@@ -34,10 +35,10 @@ const SpotScroll = ({
   // カスタムフックを呼ぶ
   useIntersectionObserver([ref], updateBatch);
   return (
-    <Box>
+    <Box sx={{ overflowY: "scroll" }}>
       <Grid container spacing={2}>
         {spots.map((spot) => (
-          <Grid item xs={12} sm={6} key={spot.ID}>
+          <Grid item xs={12} sm={6} key={spot.ID} id={spot.ID.toString()}>
             <Spot spot={spot} spotname={"大子町"} />
           </Grid>
         ))}

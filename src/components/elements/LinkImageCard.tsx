@@ -32,7 +32,7 @@ interface CardTextProps {
   href: string;
 }
 
-export default function ImageCard({
+export default function LinkImageCard({
   id,
   createdat,
   title,

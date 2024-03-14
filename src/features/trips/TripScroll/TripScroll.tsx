@@ -1,11 +1,12 @@
 "use client";
 
-import { Grid } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
-import { Trip } from "@/features";
+import { PostTrip, Trip } from "@/features";
 import { PrefectureType, TripType } from "@/types";
 import { getTripList } from "@/utils/api";
 import { useIntersectionObserver } from "@/hooks";
+import { ModalButton } from "@/components/elements";
 
 interface TripScrollProps {
   prefectures: PrefectureType[];
@@ -40,7 +41,7 @@ const TripScroll = ({ prefectures }: TripScrollProps) => {
     tripsLoader(batch);
   }, [batch]);
   return (
-    <>
+    <Box sx={{ height: "85vh", overflowY: "scroll" }}>
       <Grid container spacing={2}>
         {trips.map((trip) => (
           <Grid item xs={12} sm={6} key={trip.ID}>
@@ -52,7 +53,7 @@ const TripScroll = ({ prefectures }: TripScrollProps) => {
         ))}
       </Grid>
       {trips.length === batch + tripsPerPage && <div ref={ref}></div>}
-    </>
+    </Box>
   );
 };
 

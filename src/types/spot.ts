@@ -8,7 +8,7 @@ export default interface SpotType {
   date: string;
   starttime: string;
   endtime: string;
-  cost: string;
+  cost: number;
   memo: string;
   imagepath: string;
 }

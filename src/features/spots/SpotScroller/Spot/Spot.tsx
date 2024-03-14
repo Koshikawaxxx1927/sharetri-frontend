@@ -1,6 +1,6 @@
 "use client";
 
-import { LinkImageCard } from "@/components/elements";
+import { ImageCard, LinkImageCard } from "@/components/elements";
 import { SpotType } from "@/types";
 import { Box } from "@mui/material";
 
@@ -12,7 +12,7 @@ interface SpotProps {
 const Spot = ({ spot, spotname }: SpotProps) => {
   return (
     <Box>
-      <LinkImageCard
+      <ImageCard
         id={spot.ID}
         createdat={spot.CreatedAt.split("T")[0]}
         title={spot.name}
@@ -21,7 +21,6 @@ const Spot = ({ spot, spotname }: SpotProps) => {
         memo={spot.memo}
         src={spot.imagepath}
         spot={spotname}
-        href={`spot/${spot.ID}`}
       />
     </Box>
   );

@@ -10,6 +10,7 @@ interface SpotFlowTabProps {
   spotsPerPage: number;
   batch: number;
   setBatch: (value: SetStateAction<number>) => void;
+  handleChange: (event: React.SyntheticEvent, newValue: number) => void;
 }
 
 const SpotFlowTab = ({
@@ -18,15 +19,17 @@ const SpotFlowTab = ({
   spotsPerPage,
   batch,
   setBatch,
+  handleChange,
 }: SpotFlowTabProps) => {
   return (
-    <Box>
+    <Box sx={{ height: "85vh", overflowY: "scroll" }}>
       <TabPanel value={value} index={1}>
         <SpotTimeline
           spots={spots}
           spotsPerPage={spotsPerPage}
           batch={batch}
           setBatch={setBatch}
+          handleChange={handleChange}
         />
       </TabPanel>
     </Box>
