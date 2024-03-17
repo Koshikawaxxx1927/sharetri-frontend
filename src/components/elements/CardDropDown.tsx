@@ -10,10 +10,11 @@ import {
   Typography,
 } from "@mui/material";
 import { pink } from "@mui/material/colors";
-import { memo, useState } from "react";
+import { useState } from "react";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ShareIcon from "@mui/icons-material/Share";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;

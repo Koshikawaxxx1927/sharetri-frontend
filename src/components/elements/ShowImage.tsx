@@ -9,7 +9,14 @@ interface ShowImageProps {
 
 const ShowImage = ({ src }: ShowImageProps) => {
   return (
-    <>
+    <Box
+      sx={[
+        {
+          cursor: "pointer",
+        },
+        { "&:hover": { opacity: "0.8" } },
+      ]}
+    >
       {src === "" ? (
         <FilterIcon
           sx={{
@@ -32,7 +39,7 @@ const ShowImage = ({ src }: ShowImageProps) => {
           />
         </Box>
       )}
-    </>
+    </Box>
   );
 };
 

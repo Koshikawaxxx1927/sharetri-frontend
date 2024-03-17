@@ -1,45 +1,19 @@
 "use client";
 
-import { useRef, SetStateAction } from "react";
 import Timeline from "@mui/lab/Timeline";
 import FastfoodIcon from "@mui/icons-material/Fastfood";
 import { timelineOppositeContentClasses } from "@mui/lab/TimelineOppositeContent";
-import { TimelineElement } from "@/components/elements";
+import { DayBorder, TimelineElement } from "@/components/elements";
 import { SpotType } from "@/types";
-import { useIntersectionObserver } from "@/hooks";
 import { Box } from "@mui/material";
 
 interface SpotTimelineProps {
   spots: SpotType[];
-  spotsPerPage: number;
-  batch: number;
-  setBatch: (value: SetStateAction<number>) => void;
-  handleChange: (event: React.SyntheticEvent, newValue: number) => void;
+  onChange: (event: React.SyntheticEvent, newValue: number) => void;
 }
 
-export default function zSpotTimeline({
-  spots,
-  spotsPerPage,
-  batch,
-  setBatch,
-  handleChange,
-}: SpotTimelineProps) {
-  const ref = useRef<HTMLHeadingElement>(null);
-  const updateBatch = (
-    entries: IntersectionObserverEntry[],
-    observer: IntersectionObserver
-  ) => {
-    entries.map((entry) => {
-      if (entry.isIntersecting) {
-        observer.unobserve(entry.target);
-        setBatch((batch) => batch + spotsPerPage);
-      }
-    });
-  };
-
-  // カスタムフックを呼ぶ
-  useIntersectionObserver([ref], updateBatch);
-
+export default function SpotTimeline({ spots, onChange }: SpotTimelineProps) {
+  let currentDate = spots[0].starttime.split("T")[0];
   return (
     <Timeline
       sx={{
@@ -48,22 +22,27 @@ export default function zSpotTimeline({
         },
       }}
     >
+      {currentDate}
       {spots.map((spot) => {
         return (
-          <TimelineElement
-            key={spot.ID}
-            id={spot.ID.toString()}
-            starttime={spot.starttime.split("T")[1].split(".")[0]}
-            endtime={spot.endtime.split("T")[1].split(".")[0]}
-            name={spot.name}
-            memo={spot.memo}
-            handleChange={handleChange}
-          >
-            <FastfoodIcon />
-          </TimelineElement>
+          <Box key={spot.ID}>
+            <DayBorder
+              currentDay={currentDate}
+              newDay={spot.starttime.split("T")[0]}
+            />
+            <TimelineElement
+              id={spot.ID.toString()}
+              starttime={`${spot.starttime.split("T")[1].slice(0, 5)}`}
+              endtime={`${spot.endtime.split("T")[1].slice(0, 5)}`}
+              name={spot.name}
+              memo={spot.memo}
+              onChange={onChange}
+            >
+              <FastfoodIcon />
+            </TimelineElement>
+          </Box>
         );
       })}
-      {spots.length === batch + spotsPerPage && <Box ref={ref}></Box>}
     </Timeline>
   );
 }

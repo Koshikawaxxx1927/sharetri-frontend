@@ -17,7 +17,7 @@ interface TimelineElementProps {
   endtime: string;
   name: string;
   memo: string;
-  handleChange: (event: React.SyntheticEvent, newValue: number) => void;
+  onChange: (event: React.SyntheticEvent, newValue: number) => void;
   children: React.ReactNode;
 }
 
@@ -27,7 +27,7 @@ const TimelineElement = ({
   endtime,
   name,
   memo,
-  handleChange,
+  onChange,
   children,
 }: TimelineElementProps) => {
   return (
@@ -45,6 +45,7 @@ const TimelineElement = ({
         variant="body2"
         color="text.secondary"
       >
+        {id}
         <Typography component="div">{starttime}</Typography>
         <Typography component="div">|</Typography>
         <Typography component="div">{endtime}</Typography>

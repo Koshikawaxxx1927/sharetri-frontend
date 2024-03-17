@@ -55,7 +55,6 @@ const postTrip = async (
     body: JSON.stringify(bodyData),
   });
   const data = await res.json();
-  console.log(data);
   return data.trip;
 };
 

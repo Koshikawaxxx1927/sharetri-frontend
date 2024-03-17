@@ -1,6 +1,6 @@
 import { getPrefectureList } from "@/utils/api";
 import { PostTrip, TripScroll } from "@/features";
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import { ModalButton } from "@/components/elements";
 
 const TripList = async () => {
