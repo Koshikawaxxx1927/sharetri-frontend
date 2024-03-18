@@ -1,6 +1,12 @@
 import { getPrefecture, getPrefectureList } from "./prefecture";
-import { getAllTripList, getTripList, getTripImage, postTrip } from "./trip";
-import { getSpotList, postSpot } from "./spot";
+import {
+  getAllTripList,
+  getTripList,
+  getTripImage,
+  postTrip,
+  putTrip,
+} from "./trip";
+import { getSpotList, postSpot, putSpot } from "./spot";
 
 export {
   getPrefecture,
@@ -11,4 +17,6 @@ export {
   getSpotList,
   postTrip,
   postSpot,
+  putTrip,
+  putSpot,
 };

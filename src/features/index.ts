@@ -9,6 +9,8 @@ import SpotFlowTab from "./spots/SpotTimeFlow/SpotFlowTab/SpotFlowTab";
 import SpotTimeline from "./spots/SpotTimeFlow/SpotTimeline/SpotTimeline";
 import PostTrip from "./trips/PostTrip/PostTrip";
 import PostSpot from "./spots/SpotScroller/PostSpot/PostSpot";
+import PutTrip from "./trips/PutTrip.tsx/PutTrip";
+import PutSpot from "./spots/SpotScroller/PutSpot/PutSpot";
 
 export {
   Spot,
@@ -22,4 +24,6 @@ export {
   SpotTimeline,
   PostTrip,
   PostSpot,
+  PutTrip,
+  PutSpot,
 };

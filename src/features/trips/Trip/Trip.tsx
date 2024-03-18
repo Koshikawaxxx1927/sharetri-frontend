@@ -1,20 +1,23 @@
 "use client";
 
 import { PrefectureType, TripType } from "@/types";
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import {
   CardContents,
   ImageCard,
   LinkButton,
   ModalButton,
 } from "@/components/elements";
+import PutTrip from "../PutTrip.tsx/PutTrip";
+import DeleteTrip from "../DeleteTrip/DeleteTrip";
 
 interface TripProps {
   trip: TripType;
   prefecture: PrefectureType;
+  prefectures: PrefectureType[];
 }
 
-const Trip = ({ trip, prefecture }: TripProps) => {
+const Trip = ({ trip, prefecture, prefectures }: TripProps) => {
   return (
     <Box>
       <ImageCard
@@ -26,8 +29,8 @@ const Trip = ({ trip, prefecture }: TripProps) => {
       >
         <CardContents
           id={trip.ID}
-          start={trip.startdate.split("T")[0]}
-          end={trip.enddate.split("T")[0]}
+          start={trip.startdate}
+          end={trip.enddate}
           spot={prefecture.name}
         />
         <Grid
@@ -43,18 +46,18 @@ const Trip = ({ trip, prefecture }: TripProps) => {
               text="削除"
               size="small"
             >
-              <Typography>削除しますか</Typography>
+              <DeleteTrip trip={trip} />
             </ModalButton>
           </Grid>
           <Grid item xs={3}>
             <ModalButton
-              text="編集"
+              text="更新"
               variant="outlined"
               size="small"
               color="success"
               sx={{ width: "100%" }}
             >
-              <Box>編集します</Box>
+              <PutTrip prefectures={prefectures} trip={trip} />
             </ModalButton>
           </Grid>
           <Grid item xs={3}>
@@ -63,7 +66,7 @@ const Trip = ({ trip, prefecture }: TripProps) => {
               variant="outlined"
               size="small"
               sx={{ width: "100%" }}
-              href="#"
+              href={`trip/${trip.ID}`}
             />
           </Grid>
         </Grid>

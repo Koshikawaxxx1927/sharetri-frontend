@@ -25,6 +25,7 @@ import { PrefectureType, TripType } from "@/types";
 import { postTrip } from "@/utils/api";
 import React from "react";
 import CloseIcon from "@mui/icons-material/Close";
+import { useTrips, useUpdateTrips } from "@/context";
 
 interface PostTripProps {
   prefectures: PrefectureType[];
@@ -44,8 +45,11 @@ const PostTrip = ({ prefectures, handleClose = () => {} }: PostTripProps) => {
   } = useForm<TripType>();
   const userid = 1;
 
-  const submit = (data: TripType) => {
-    postTrip(
+  const trips = useTrips();
+  const setTrips = useUpdateTrips();
+
+  const submit = async (data: TripType) => {
+    const trip = await postTrip(
       userid,
       data.title,
       data.startdate,
@@ -55,6 +59,10 @@ const PostTrip = ({ prefectures, handleClose = () => {} }: PostTripProps) => {
       Boolean(data.ispublic)
     );
     handleAlert();
+    if (!trips.includes(trip)) {
+      trips.push(trip);
+      setTrips([...trips]);
+    }
   };
 
   const [open, setOpen] = React.useState(false);

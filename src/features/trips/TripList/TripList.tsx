@@ -2,6 +2,7 @@ import { getPrefectureList } from "@/utils/api";
 import { PostTrip, TripScroll } from "@/features";
 import { Box, Grid } from "@mui/material";
 import { ModalButton } from "@/components/elements";
+import { TripProvider } from "@/context";
 
 const TripList = async () => {
   const prefectures = await getPrefectureList();

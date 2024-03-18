@@ -37,7 +37,6 @@ const postSpot = async (
     endtime: `${endtime}:00.000+09:00`,
     cost: Number(cost),
     memo: memo,
-    date: "2024-02-23T08:43:42.709+09:00",
   };
   const res = await fetch(`http://localhost:8080/spot/${tripid}`, {
     method: "POST",
@@ -50,4 +49,42 @@ const postSpot = async (
   return data.spot;
 };
 
-export { getSpotList, getSpotImage, postSpot };
+const putSpot = async (
+  tripid: string | undefined,
+  spotid: number,
+  name: string,
+  starttime: string,
+  endtime: string,
+  cost: number,
+  memo: string
+): Promise<SpotType> => {
+  const bodyData = {
+    tripid: `${tripid}`,
+    name: name,
+    starttime: `${starttime}+09:00`,
+    endtime: `${endtime}+09:00`,
+    cost: Number(cost),
+    memo: memo,
+  };
+
+  const res = await fetch(`http://localhost:8080/spot/${spotid}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(bodyData),
+  });
+  console.log(JSON.stringify(bodyData));
+  const data = await res.json();
+  return data.spot;
+};
+
+const deleteSpot = async (spot: SpotType): Promise<SpotType[]> => {
+  const res = await fetch(`http://localhost:8080/spot/${spot.ID}`, {
+    method: "DELETE",
+  });
+  const data = await res.json();
+  return data.spots;
+};
+
+export { getSpotList, getSpotImage, postSpot, deleteSpot, putSpot };

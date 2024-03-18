@@ -6,14 +6,15 @@ import { timelineOppositeContentClasses } from "@mui/lab/TimelineOppositeContent
 import { DayBorder, TimelineElement } from "@/components/elements";
 import { SpotType } from "@/types";
 import { Box } from "@mui/material";
+import { useSpots } from "@/context";
 
 interface SpotTimelineProps {
-  spots: SpotType[];
   onChange: (event: React.SyntheticEvent, newValue: number) => void;
 }
 
-export default function SpotTimeline({ spots, onChange }: SpotTimelineProps) {
-  let currentDate = spots[0].starttime.split("T")[0];
+export default function SpotTimeline({ onChange }: SpotTimelineProps) {
+  const spots = useSpots();
+  let currentDate = spots[0]?.starttime.split("T")[0];
   return (
     <Timeline
       sx={{

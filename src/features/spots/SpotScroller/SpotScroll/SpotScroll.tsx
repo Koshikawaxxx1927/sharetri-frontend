@@ -3,13 +3,10 @@
 import { Grid } from "@mui/material";
 import React from "react";
 import { Spot } from "@/features";
-import { SpotType } from "@/types";
+import { useSpots } from "@/context";
 
-interface SpotScrollProps {
-  spots: SpotType[];
-}
-
-const SpotScroll = ({ spots }: SpotScrollProps) => {
+const SpotScroll = () => {
+  const spots = useSpots();
   return (
     <>
       <Grid container spacing={2}>

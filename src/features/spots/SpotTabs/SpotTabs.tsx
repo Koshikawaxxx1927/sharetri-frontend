@@ -9,7 +9,6 @@ import type { Swiper as SwiperCore } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { SpotListTab, SpotFlowTab, PostSpot } from "@/features";
-import { SpotType } from "@/types";
 import { getSpotList } from "@/utils/api";
 import { usePathname } from "next/navigation";
 import {
@@ -18,6 +17,7 @@ import {
   OverflowScroll,
 } from "@/components/elements";
 import { Grid } from "@mui/material";
+import { SpotProvider, useSpots, useUpdateSpots } from "@/context";
 
 function a11yProps(index: number) {
   return {
@@ -45,7 +45,8 @@ function SpotTabs() {
 
   // スポットのロード
   const spotsPerPage = 12;
-  const [spots, setSpots] = React.useState<SpotType[]>([]);
+  const spots = useSpots();
+  const setSpots = useUpdateSpots();
   const pathname = usePathname();
   const tripid = Number(pathname.split("/").pop());
 
@@ -53,7 +54,6 @@ function SpotTabs() {
     const _spots = await getSpotList(tripid, batch, spotsPerPage);
     setSpots((spots) => [...spots, ..._spots]);
   };
-
   return (
     <Box sx={{ bgcolor: "background.paper", width: 1 }}>
       <AppBar position="sticky">
@@ -76,14 +76,10 @@ function SpotTabs() {
           onSlideChange={onSlideChange}
         >
           <SwiperSlide>
-            <SpotListTab value={value} spots={spots} />
+            <SpotListTab value={value} />
           </SwiperSlide>
           <SwiperSlide>
-            <SpotFlowTab
-              value={value}
-              spots={spots}
-              handleChange={handleChange}
-            />
+            <SpotFlowTab value={value} handleChange={handleChange} />
           </SwiperSlide>
           <InfiniteScroll
             array={spots}

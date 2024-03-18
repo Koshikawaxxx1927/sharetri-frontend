@@ -7,10 +7,17 @@ interface SwitchFormProps {
   name: string;
   register: UseFormRegister<any>;
   errors: string | undefined;
+  value?: boolean;
 }
 
-const SwitchForm = ({ label, name, register, errors }: SwitchFormProps) => {
-  const [isPublic, setIsPublic] = React.useState(true);
+const SwitchForm = ({
+  label,
+  name,
+  register,
+  errors,
+  value = false,
+}: SwitchFormProps) => {
+  const [isPublic, setIsPublic] = React.useState(value);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsPublic(event.target.checked);

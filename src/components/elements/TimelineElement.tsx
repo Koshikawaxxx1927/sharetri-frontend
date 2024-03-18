@@ -8,8 +8,6 @@ import TimelineConnector from "@mui/lab/TimelineConnector";
 import TimelineContent from "@mui/lab/TimelineContent";
 import TimelineDot from "@mui/lab/TimelineDot";
 import Typography from "@mui/material/Typography";
-import { Link as Scroll } from "react-scroll";
-import Box from "@mui/material/Box/Box";
 
 interface TimelineElementProps {
   id: string;

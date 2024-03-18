@@ -1,13 +1,15 @@
+"use client";
+
 import {
   FormControl,
   InputLabel,
   MenuItem,
   Select,
-  TextField,
+  SelectChangeEvent,
   Typography,
 } from "@mui/material";
-import React from "react";
-import { FieldErrors, UseFormRegister } from "react-hook-form";
+import React, { ChangeEvent, useState } from "react";
+import { UseFormRegister } from "react-hook-form";
 
 interface PulldownFormProps {
   label: string;
@@ -15,6 +17,7 @@ interface PulldownFormProps {
   register: UseFormRegister<any>;
   errors: string | undefined;
   children: React.ReactNode;
+  value?: string;
 }
 
 const PulldownForm = ({
@@ -23,7 +26,12 @@ const PulldownForm = ({
   register,
   errors,
   children,
+  value = "",
 }: PulldownFormProps) => {
+  const [selection, setSelection] = useState(value);
+  const changeHandler = (e: SelectChangeEvent<string>) => {
+    setSelection(e.target.value);
+  };
   return (
     <>
       <Typography sx={{ color: "gray" }}>{label}</Typography>
@@ -33,6 +41,8 @@ const PulldownForm = ({
           defaultValue={""}
           label={label}
           {...register(name, { required: `${label}を入力してください` })}
+          value={selection}
+          onChange={changeHandler}
         >
           <MenuItem value={""}>
             <em>None</em>

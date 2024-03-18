@@ -1,5 +1,7 @@
+"use client";
+
 import { TextField, Typography } from "@mui/material";
-import React from "react";
+import React, { ChangeEvent, useState } from "react";
 import { UseFormRegister } from "react-hook-form";
 
 interface NumberFormProps {
@@ -7,9 +9,22 @@ interface NumberFormProps {
   name: string;
   register: UseFormRegister<any>;
   errors: string | undefined;
+  value?: number;
 }
 
-const NumberForm = ({ label, name, register, errors }: NumberFormProps) => {
+const NumberForm = ({
+  label,
+  name,
+  register,
+  errors,
+  value,
+}: NumberFormProps) => {
+  const [number, setNumber] = useState(value);
+  const changeHandler = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setNumber(Number(e.target.value));
+  };
   return (
     <>
       <Typography sx={{ color: "gray" }}>{label}</Typography>
@@ -17,6 +32,8 @@ const NumberForm = ({ label, name, register, errors }: NumberFormProps) => {
         label={label}
         type="number"
         {...register(name, { required: `${label}を入力してください` })}
+        value={number}
+        onChange={changeHandler}
       />
       <Typography sx={{ color: "red" }}>{errors}</Typography>
     </>

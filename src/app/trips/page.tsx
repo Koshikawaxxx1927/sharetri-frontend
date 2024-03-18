@@ -1,12 +1,15 @@
 import React from "react";
 import { TripList } from "@/features";
-import { Container, Box } from "@mui/material";
+import { Container } from "@mui/material";
+import { TripProvider } from "@/context";
 
 const page = () => {
   return (
     <Container maxWidth="sm">
       <div>
-        <TripList />
+        <TripProvider>
+          <TripList />
+        </TripProvider>
       </div>
     </Container>
   );

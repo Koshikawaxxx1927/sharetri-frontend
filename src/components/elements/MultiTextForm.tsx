@@ -1,12 +1,15 @@
+"use client";
+
 import { TextField, Typography } from "@mui/material";
-import React from "react";
-import { FieldErrors, UseFormRegister } from "react-hook-form";
+import React, { useState, ChangeEvent } from "react";
+import { UseFormRegister } from "react-hook-form";
 
 interface MultiTextFormProps {
   label: string;
   name: string;
   register: UseFormRegister<any>;
   errors: string | undefined;
+  value?: string;
 }
 
 const MultiTextForm = ({
@@ -14,14 +17,22 @@ const MultiTextForm = ({
   name,
   register,
   errors,
+  value = "",
 }: MultiTextFormProps) => {
+  const [text, setText] = useState(value);
+  const changeHandler = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setText(e.target.value);
+  };
   return (
     <>
       <Typography sx={{ color: "gray" }}>{label}</Typography>
       <TextField
-        label={label}
         multiline
         {...register(name, { required: `${label}を入力してください` })}
+        value={text}
+        onChange={changeHandler}
       />
       <Typography sx={{ color: "red" }}>{errors}</Typography>
     </>
@@ -29,3 +40,6 @@ const MultiTextForm = ({
 };
 
 export default MultiTextForm;
+// function useState(value: string | undefined): [any, any] {
+//   throw new Error("Function not implemented.");
+// }
