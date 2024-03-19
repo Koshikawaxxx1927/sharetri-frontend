@@ -29,8 +29,8 @@ const Spot = ({ spot, spotname }: SpotProps) => {
       >
         <CardContents
           id={spot.ID}
-          start={spot.starttime.split("T")[1].slice(0, 5)}
-          end={spot.endtime.split("T")[1].slice(0, 5)}
+          start={spot.starttime.split("T")[1]}
+          end={spot.endtime.split("T")[1]}
           spot={spot.name}
         />
         <Grid

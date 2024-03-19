@@ -33,8 +33,8 @@ export default function SpotTimeline({ onChange }: SpotTimelineProps) {
             />
             <TimelineElement
               id={spot.ID.toString()}
-              starttime={`${spot.starttime.split("T")[1].slice(0, 5)}`}
-              endtime={`${spot.endtime.split("T")[1].slice(0, 5)}`}
+              starttime={`${spot.starttime.split("T")[1]}`}
+              endtime={`${spot.endtime.split("T")[1]}`}
               name={spot.name}
               memo={spot.memo}
               onChange={onChange}

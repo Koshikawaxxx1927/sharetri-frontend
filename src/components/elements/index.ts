@@ -1,5 +1,4 @@
 import ImageCard from "./ImageCard";
-import RouterPagination from "./RouterPagination";
 import CardDropDown from "./CardDropDown";
 import ShowImage from "./ShowImage";
 import CardContents from "./CardContents";
@@ -24,7 +23,6 @@ import OverflowScroll from "./OverflowScroll";
 
 export {
   ImageCard,
-  RouterPagination,
   CardDropDown,
   ShowImage,
   CardContents,

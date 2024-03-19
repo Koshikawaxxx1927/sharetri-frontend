@@ -52,7 +52,12 @@ function SpotTabs() {
 
   const spotsLoader = async (batch: number) => {
     const _spots = await getSpotList(tripid, batch, spotsPerPage);
-    setSpots((spots) => [...spots, ..._spots]);
+    const spotsArray = [...spots, ..._spots];
+    const spotsIDs = spots.map((spot) => spot.ID);
+    const filteredSpots = spotsArray.filter(
+      (spot) => !spotsIDs.includes(spot.ID)
+    );
+    setSpots((spots) => [...spots, ...filteredSpots]);
   };
   return (
     <Box sx={{ bgcolor: "background.paper", width: 1 }}>
@@ -98,7 +103,7 @@ function SpotTabs() {
         >
           <Grid item xs={12}>
             <ModalButton text={"スポットを追加"}>
-              <PostSpot />
+              <PostSpot tripid={tripid} />
             </ModalButton>
           </Grid>
         </Grid>

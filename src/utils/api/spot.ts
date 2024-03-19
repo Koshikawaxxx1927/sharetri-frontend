@@ -12,6 +12,14 @@ const getSpotList = async (
     }
   );
   const data = await res.json();
+  data.spots.map((spot: SpotType) => {
+    spot.starttime =
+      spot.starttime.match(/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/)?.[0] ?? "";
+  });
+  data.spots.map((spot: SpotType) => {
+    spot.endtime =
+      spot.endtime.match(/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/)?.[0] ?? "";
+  });
   return data.spots;
 };
 
@@ -46,6 +54,10 @@ const postSpot = async (
     body: JSON.stringify(bodyData),
   });
   const data = await res.json();
+  data.spot.starttime =
+    data.spot.starttime.match(/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/)?.[0] ?? "";
+  data.spot.endtime =
+    data.spot.endtime.match(/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/)?.[0] ?? "";
   return data.spot;
 };
 
@@ -61,8 +73,8 @@ const putSpot = async (
   const bodyData = {
     tripid: `${tripid}`,
     name: name,
-    starttime: `${starttime}+09:00`,
-    endtime: `${endtime}+09:00`,
+    starttime: `${starttime}:00.000+09:00`,
+    endtime: `${endtime}:00.000+09:00`,
     cost: Number(cost),
     memo: memo,
   };
@@ -74,8 +86,11 @@ const putSpot = async (
     },
     body: JSON.stringify(bodyData),
   });
-  console.log(JSON.stringify(bodyData));
   const data = await res.json();
+  data.spot.starttime =
+    data.spot.starttime.match(/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/)?.[0] ?? "";
+  data.spot.endtime =
+    data.spot.endtime.match(/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/)?.[0] ?? "";
   return data.spot;
 };
 
@@ -84,6 +99,10 @@ const deleteSpot = async (spot: SpotType): Promise<SpotType[]> => {
     method: "DELETE",
   });
   const data = await res.json();
+  data.spot.starttime =
+    data.spot.starttime.match(/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/)?.[0] ?? "";
+  data.spot.endtime =
+    data.spot.endtime.match(/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/)?.[0] ?? "";
   return data.spots;
 };
 

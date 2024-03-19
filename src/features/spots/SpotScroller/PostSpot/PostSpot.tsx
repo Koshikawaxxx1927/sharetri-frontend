@@ -25,8 +25,10 @@ import { PrefectureType, SpotType } from "@/types";
 import React from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { postSpot } from "@/utils/api";
+import { useSpots, useUpdateSpots } from "@/context";
 
 interface PostSpotProps {
+  tripid: number;
   handleClose?: () => void;
 }
 
@@ -35,16 +37,18 @@ const closeButtonStyle = {
   textAlign: "right",
 };
 
-const PostSpot = ({ handleClose = () => {} }: PostSpotProps) => {
+const PostSpot = ({ tripid, handleClose = () => {} }: PostSpotProps) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<SpotType>();
-  const tripid = 1;
 
-  const submit = (data: SpotType) => {
-    postSpot(
+  const spots = useSpots();
+  const setSpots = useUpdateSpots();
+
+  const submit = async (data: SpotType) => {
+    const spot = await postSpot(
       tripid,
       data.name,
       data.starttime,
@@ -53,6 +57,10 @@ const PostSpot = ({ handleClose = () => {} }: PostSpotProps) => {
       data.memo
     );
     handleAlert();
+    if (!spots.includes(spot)) {
+      spots.push(spot);
+      setSpots([...spots]);
+    }
   };
 
   const [open, setOpen] = React.useState(false);
