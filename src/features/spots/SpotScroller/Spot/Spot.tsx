@@ -11,6 +11,9 @@ import { Box, Grid } from "@mui/material";
 import DeleteSpot from "../DeleteSpot/DeleteSpot";
 import { useSpots } from "@/context";
 import PutSpot from "../PutSpot/PutSpot";
+import PostSpotImage from "../../PostSpotImage/PostSpotImage";
+import { useEffect, useState } from "react";
+import { getSpotImage } from "@/utils/api/spot";
 
 interface SpotProps {
   spot: SpotType;
@@ -18,14 +21,35 @@ interface SpotProps {
 }
 
 const Spot = ({ spot, spotname }: SpotProps) => {
+  const [src, setSrc] = useState("");
+  const favoriteClickHandler = (isFavorite: boolean) => {
+    console.log(isFavorite);
+  };
+  const userFavorite = true;
+  const imageFetch = async (id: string) => {
+    const _src = await getSpotImage(id);
+    setSrc(_src);
+  };
+  useEffect(() => {
+    if (spot.imagepath !== "") {
+      imageFetch(spot.ID.toString());
+    }
+  }, [spot.imagepath]);
   return (
     <Box>
       <ImageCard
         title={spot.name}
         createdat={spot.CreatedAt.split("T")[0]}
         memo={spot.memo}
-        src={spot.imagepath}
+        src={src}
         spot={spotname}
+        favorite={userFavorite}
+        favoriteOnClick={favoriteClickHandler}
+        PostComponent={
+          <PostSpotImage spotid={spot.ID.toString()}>
+            アップロード
+          </PostSpotImage>
+        }
       >
         <CardContents
           id={spot.ID}

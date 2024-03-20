@@ -30,7 +30,8 @@
     "src/features/spots/SpotTimeFlow/SpotFlowTab",
     "src/features/spots/SpotScroller/SpotListTab",
     "src/features/spots/SpotTimeFlow/SpotTimeline",
-    "src/features/spots/SpotTabs"
+    "src/features/spots/SpotTabs",
+    "src/features/trips/PutTrip"
   ],
   "exclude": ["node_modules"]
 }

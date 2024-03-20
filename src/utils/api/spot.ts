@@ -23,7 +23,7 @@ const getSpotList = async (
   return data.spots;
 };
 
-const getSpotImage = async (spotid: number): Promise<string> => {
+const getSpotImage = async (spotid: string): Promise<string> => {
   const res = await fetch(`http://localhost:8080/spotimage/${spotid}`);
   const blob = await res.blob();
   const src = URL.createObjectURL(blob);
@@ -106,4 +106,27 @@ const deleteSpot = async (spot: SpotType): Promise<SpotType[]> => {
   return data.spots;
 };
 
-export { getSpotList, getSpotImage, postSpot, deleteSpot, putSpot };
+const postSpotImage = async (spotimage: File | undefined, spotid: string) => {
+  if (spotimage === undefined) return;
+  const formData = new FormData();
+  formData.append("image", spotimage, "image.png");
+  const res = await fetch(`http://localhost:8080/spotimage/${spotid}`, {
+    method: "POST",
+    body: formData,
+  });
+  const data = await res.json();
+  data.spot.starttime =
+    data.spot.starttime.match(/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/)?.[0] ?? "";
+  data.spot.endtime =
+    data.spot.endtime.match(/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/)?.[0] ?? "";
+  return data.spot;
+};
+
+export {
+  getSpotList,
+  getSpotImage,
+  postSpot,
+  deleteSpot,
+  putSpot,
+  postSpotImage,
+};

@@ -11,10 +11,10 @@ import {
 } from "@mui/material";
 import { pink } from "@mui/material/colors";
 import { useState } from "react";
-import FavoriteIcon from "@mui/icons-material/Favorite";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ShareIcon from "@mui/icons-material/Share";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import FavoriteButton from "./FavoriteButton";
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -33,10 +33,15 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 
 interface CardDropDownProps {
   text: string;
+  favorite: boolean;
+  favoriteOnClick: (isFavorite: boolean) => void;
 }
 
-const CardDropDown = ({ text }: CardDropDownProps) => {
-  const isFavorite = false;
+const CardDropDown = ({
+  text,
+  favorite,
+  favoriteOnClick,
+}: CardDropDownProps) => {
   const [expanded, setExpanded] = useState(false);
 
   const handleExpandClick = () => {
@@ -45,13 +50,7 @@ const CardDropDown = ({ text }: CardDropDownProps) => {
   return (
     <>
       <CardActions disableSpacing sx={{ backgroundColor: "#2aff2a" }}>
-        <IconButton aria-label="add to favorites">
-          {isFavorite ? (
-            <FavoriteIcon sx={{ color: pink[500] }} />
-          ) : (
-            <FavoriteIcon />
-          )}
-        </IconButton>
+        <FavoriteButton favorite={favorite} onClick={favoriteOnClick} />
         <IconButton aria-label="share">
           <ShareIcon color="primary" />
         </IconButton>

@@ -1,15 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Card from "@mui/material/Card";
 import { Box } from "@mui/material";
-import { getTripImage } from "@/utils/api";
-import {
-  CardDropDown,
-  ShowImage,
-  CardContents,
-  CardHeader,
-} from "@/components/elements";
+import { CardDropDown, ShowImage, CardHeader } from "@/components/elements";
+import React from "react";
 
 interface CardTextProps {
   title: string;
@@ -17,7 +11,10 @@ interface CardTextProps {
   src: string;
   memo: string;
   spot: string;
+  favorite: boolean;
+  favoriteOnClick: (isFavorite: boolean) => void;
   children: React.ReactNode;
+  PostComponent: React.ReactElement;
 }
 
 export default function ImageCard({
@@ -25,7 +22,10 @@ export default function ImageCard({
   createdat,
   src,
   memo,
+  favorite,
+  favoriteOnClick,
   children,
+  PostComponent,
 }: CardTextProps) {
   return (
     <Card sx={{ maxWidth: 345, margin: "0 auto" }}>
@@ -35,10 +35,14 @@ export default function ImageCard({
         }}
       >
         <CardHeader title={title} createdat={createdat} />
-        <ShowImage src={src} />
+        <ShowImage src={src} children={PostComponent} />
         {children}
       </Box>
-      <CardDropDown text={memo} />
+      <CardDropDown
+        favorite={favorite}
+        favoriteOnClick={favoriteOnClick}
+        text={memo}
+      />
     </Card>
   );
 }

@@ -12,4 +12,5 @@ export default interface TripType {
   memo: string;
   imagepath: string;
   ispublic: boolean;
+  favorite: number;
 }

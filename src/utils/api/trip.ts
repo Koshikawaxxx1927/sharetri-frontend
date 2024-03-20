@@ -34,7 +34,7 @@ const getTripList = async (
   return data.trips;
 };
 
-const getTripImage = async (tripid: number): Promise<string> => {
+const getTripImage = async (tripid: string): Promise<string> => {
   const res = await fetch(`http://localhost:8080/tripimage/${tripid}`);
   const blob = await res.blob();
   const src = URL.createObjectURL(blob);
@@ -79,7 +79,8 @@ const putTrip = async (
   enddate: string,
   prefectureid: string,
   memo: string,
-  ispublic: boolean
+  ispublic: boolean,
+  favorite: number
 ): Promise<TripType> => {
   const bodyData = {
     prefectureid: `${prefectureid}`,
@@ -88,6 +89,7 @@ const putTrip = async (
     enddate: `${enddate}T00:00:00.000+09:00`,
     memo: memo,
     ispublic: ispublic,
+    favorite: favorite,
   };
   const res = await fetch(`http://localhost:8080/trip/${tripid}`, {
     method: "PUT",
@@ -112,6 +114,20 @@ const deleteTrip = async (trip: TripType): Promise<TripType[]> => {
   return data.trips;
 };
 
+const postTripImage = async (tripimage: File | undefined, tripid: string) => {
+  if (tripimage === undefined) return;
+  const formData = new FormData();
+  formData.append("image", tripimage, "image.png");
+  const res = await fetch(`http://localhost:8080/tripimage/${tripid}`, {
+    method: "POST",
+    body: formData,
+  });
+  const data = await res.json();
+  data.trip.startdate = data.trip.startdate.split("T")[0];
+  data.trip.enddate = data.trip.enddate.split("T")[0];
+  return data.trip;
+};
+
 export {
   getAllTripList,
   getTripList,
@@ -119,4 +135,5 @@ export {
   postTrip,
   putTrip,
   deleteTrip,
+  postTripImage,
 };
