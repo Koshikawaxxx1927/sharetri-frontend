@@ -2,6 +2,7 @@ import React from "react";
 import { TripList } from "@/features";
 import { Container } from "@mui/material";
 import { TripProvider } from "@/context";
+import { Header } from "@/components/elements";
 
 const page = () => {
   return (

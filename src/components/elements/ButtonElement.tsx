@@ -4,6 +4,7 @@ import Button from "@mui/material/Button";
 import { text } from "stream/consumers";
 
 interface ButtonElementProps {
+  type?: "submit" | "reset" | "button" | undefined;
   text: string;
   textVariant?:
     | "h1"
@@ -36,6 +37,7 @@ interface ButtonElementProps {
 }
 
 const ButtonElement = ({
+  type,
   text,
   textVariant,
   size,
@@ -46,6 +48,7 @@ const ButtonElement = ({
 }: ButtonElementProps) => {
   return (
     <Button
+      type={type}
       color={color}
       size={size}
       variant={variant}

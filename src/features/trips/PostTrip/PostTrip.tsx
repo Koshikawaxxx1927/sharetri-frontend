@@ -77,7 +77,7 @@ const PostTrip = ({ prefectures, handleClose = () => {} }: PostTripProps) => {
   return (
     <>
       <Container maxWidth="sm" sx={{ p: 2 }}>
-        <OverflowScroll height="80vh">
+        <OverflowScroll height="75vh">
           <Box sx={closeButtonStyle}>
             <IconButton onClick={handleClose}>
               <CloseIcon />

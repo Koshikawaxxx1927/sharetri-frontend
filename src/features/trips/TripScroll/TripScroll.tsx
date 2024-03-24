@@ -26,7 +26,7 @@ const TripScroll = ({ prefectures }: TripScrollProps) => {
     setTrips([...trips, ...filteredTrips]);
   };
   return (
-    <OverflowScroll height="85vh">
+    <OverflowScroll height="75vh">
       <Grid container spacing={2}>
         {trips.map((trip) => {
           return (

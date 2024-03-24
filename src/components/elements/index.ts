@@ -20,6 +20,10 @@ import ButtonElement from "./ButtonElement";
 import LinkButton from "./LinkButton";
 import InfiniteScroll from "./InfiniteScroll";
 import OverflowScroll from "./OverflowScroll";
+import Signup from "./Signup";
+import Signin from "./Signin";
+import Header from "./Header";
+import PasswordForm from "./PasswordForm";
 
 export {
   ImageCard,
@@ -44,4 +48,8 @@ export {
   LinkButton,
   InfiniteScroll,
   OverflowScroll,
+  Signup,
+  Signin,
+  Header,
+  PasswordForm,
 };

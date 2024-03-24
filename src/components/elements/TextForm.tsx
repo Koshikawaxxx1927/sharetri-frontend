@@ -1,6 +1,6 @@
 "use client";
 
-import { TextField, Typography } from "@mui/material";
+import { SxProps, TextField, Theme, Typography } from "@mui/material";
 import { ChangeEvent, useState } from "react";
 import { UseFormRegister } from "react-hook-form";
 
@@ -10,6 +10,7 @@ interface TextFormProps {
   register: UseFormRegister<any>;
   errors: string | undefined;
   value?: string;
+  sx?: SxProps<Theme> | undefined;
 }
 
 const TextForm = ({
@@ -18,6 +19,7 @@ const TextForm = ({
   register,
   errors,
   value = "",
+  sx,
 }: TextFormProps) => {
   const [text, setText] = useState(value);
   const changeHandler = (
@@ -33,6 +35,7 @@ const TextForm = ({
         {...register(name, { required: `${label}を入力してください` })}
         value={text}
         onChange={changeHandler}
+        sx={sx}
       />
       <Typography sx={{ color: "red" }}>{errors}</Typography>
     </>
