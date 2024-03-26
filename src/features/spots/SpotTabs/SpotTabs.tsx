@@ -74,7 +74,7 @@ function SpotTabs() {
           <Tab label="Time flow" {...a11yProps(1)} />
         </Tabs>
       </AppBar>
-      <OverflowScroll height="80vh">
+      <OverflowScroll height="75vh">
         <Swiper
           simulateTouch={false}
           onSwiper={onSwiper}

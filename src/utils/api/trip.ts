@@ -42,7 +42,7 @@ const getTripImage = async (tripid: string): Promise<string> => {
 };
 
 const postTrip = async (
-  userid: number,
+  userid: string | undefined,
   title: string,
   startdate: string,
   enddate: string,
@@ -59,13 +59,17 @@ const postTrip = async (
     imagepath: "",
     ispublic: ispublic,
   };
-  const res = await fetch(`http://localhost:8080/trip/${userid}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(bodyData),
-  });
+  const res = await fetch(
+    `http://localhost:8080/trip/login/api/v1/trip/${userid}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+      },
+      body: JSON.stringify(bodyData),
+    }
+  );
   const data = await res.json();
   data.trip.startdate = data.trip.startdate.split("T")[0];
   data.trip.enddate = data.trip.enddate.split("T")[0];
@@ -73,6 +77,7 @@ const postTrip = async (
 };
 
 const putTrip = async (
+  userid: string | undefined,
   tripid: number,
   title: string,
   startdate: string,
@@ -91,37 +96,60 @@ const putTrip = async (
     ispublic: ispublic,
     favorite: favorite,
   };
-  const res = await fetch(`http://localhost:8080/trip/${tripid}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(bodyData),
-  });
+  const res = await fetch(
+    `http://localhost:8080/trip/user/api/v1/trip/${tripid}`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("jwt")};UID ${userid}`,
+      },
+      body: JSON.stringify(bodyData),
+    }
+  );
   const data = await res.json();
   data.trip.startdate = data.trip.startdate.split("T")[0];
   data.trip.enddate = data.trip.enddate.split("T")[0];
   return data.trip;
 };
 
-const deleteTrip = async (trip: TripType): Promise<TripType[]> => {
-  const res = await fetch(`http://localhost:8080/trip/${trip.ID}`, {
-    method: "DELETE",
-  });
+const deleteTrip = async (
+  userid: string | undefined,
+  tripid: string
+): Promise<TripType[]> => {
+  const res = await fetch(
+    `http://localhost:8080/trip/user/api/v1/trip/${tripid}`,
+    {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("jwt")};UID ${userid}`,
+      },
+    }
+  );
   const data = await res.json();
   data.trip.startdate = data.trip.startdate.split("T")[0];
   data.trip.enddate = data.trip.enddate.split("T")[0];
   return data.trips;
 };
 
-const postTripImage = async (tripimage: File | undefined, tripid: string) => {
+const postTripImage = async (
+  tripimage: File | undefined,
+  tripid: string,
+  userid: string | undefined
+) => {
   if (tripimage === undefined) return;
   const formData = new FormData();
   formData.append("image", tripimage, "image.png");
-  const res = await fetch(`http://localhost:8080/tripimage/${tripid}`, {
-    method: "POST",
-    body: formData,
-  });
+  const res = await fetch(
+    `http://localhost:8080/trip/user/api/v1/tripimage/${tripid}`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("jwt")};UID ${userid}`,
+      },
+      body: formData,
+    }
+  );
   const data = await res.json();
   data.trip.startdate = data.trip.startdate.split("T")[0];
   data.trip.enddate = data.trip.enddate.split("T")[0];

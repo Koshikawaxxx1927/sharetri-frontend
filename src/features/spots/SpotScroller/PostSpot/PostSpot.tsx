@@ -75,7 +75,7 @@ const PostSpot = ({ tripid, handleClose = () => {} }: PostSpotProps) => {
   return (
     <>
       <Container maxWidth="sm" sx={{ p: 2 }}>
-        <OverflowScroll height="75vh">
+        <OverflowScroll height="70vh">
           <Box sx={closeButtonStyle}>
             <IconButton onClick={handleClose}>
               <CloseIcon />

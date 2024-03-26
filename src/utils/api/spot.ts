@@ -46,13 +46,17 @@ const postSpot = async (
     cost: Number(cost),
     memo: memo,
   };
-  const res = await fetch(`http://localhost:8080/spot/${tripid}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(bodyData),
-  });
+  const res = await fetch(
+    `http://localhost:8080/spot/login/api/v1/spot/${tripid}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+      },
+      body: JSON.stringify(bodyData),
+    }
+  );
   const data = await res.json();
   data.spot.starttime =
     data.spot.starttime.match(/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/)?.[0] ?? "";
@@ -62,6 +66,7 @@ const postSpot = async (
 };
 
 const putSpot = async (
+  userid: string | undefined,
   tripid: string | undefined,
   spotid: number,
   name: string,
@@ -79,13 +84,17 @@ const putSpot = async (
     memo: memo,
   };
 
-  const res = await fetch(`http://localhost:8080/spot/${spotid}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(bodyData),
-  });
+  const res = await fetch(
+    `http://localhost:8080/spot/user/api/v1/spot/${spotid}`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("jwt")};UID ${userid}`,
+      },
+      body: JSON.stringify(bodyData),
+    }
+  );
   const data = await res.json();
   data.spot.starttime =
     data.spot.starttime.match(/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/)?.[0] ?? "";
@@ -94,10 +103,19 @@ const putSpot = async (
   return data.spot;
 };
 
-const deleteSpot = async (spot: SpotType): Promise<SpotType[]> => {
-  const res = await fetch(`http://localhost:8080/spot/${spot.ID}`, {
-    method: "DELETE",
-  });
+const deleteSpot = async (
+  userid: string | undefined,
+  spot: SpotType
+): Promise<SpotType[]> => {
+  const res = await fetch(
+    `http://localhost:8080/spot/user/api/v1/spot/${spot.ID}`,
+    {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("jwt")};UID ${userid}`,
+      },
+    }
+  );
   const data = await res.json();
   data.spot.starttime =
     data.spot.starttime.match(/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/)?.[0] ?? "";
@@ -106,14 +124,24 @@ const deleteSpot = async (spot: SpotType): Promise<SpotType[]> => {
   return data.spots;
 };
 
-const postSpotImage = async (spotimage: File | undefined, spotid: string) => {
+const postSpotImage = async (
+  spotimage: File | undefined,
+  spotid: string,
+  userid: string | undefined
+) => {
   if (spotimage === undefined) return;
   const formData = new FormData();
   formData.append("image", spotimage, "image.png");
-  const res = await fetch(`http://localhost:8080/spotimage/${spotid}`, {
-    method: "POST",
-    body: formData,
-  });
+  const res = await fetch(
+    `http://localhost:8080/spot/user/api/v1/spotimage/${spotid}`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("jwt")};UID ${userid}`,
+      },
+      body: formData,
+    }
+  );
   const data = await res.json();
   data.spot.starttime =
     data.spot.starttime.match(/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/)?.[0] ?? "";
