@@ -5,7 +5,7 @@ import { text } from "stream/consumers";
 
 interface ButtonElementProps {
   type?: "submit" | "reset" | "button" | undefined;
-  text: string;
+  text?: string | undefined;
   textVariant?:
     | "h1"
     | "h2"

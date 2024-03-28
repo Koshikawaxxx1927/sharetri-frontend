@@ -6,6 +6,7 @@ import { PrefectureType } from "@/types";
 import { getTripList } from "@/utils/api";
 import { InfiniteScroll, OverflowScroll } from "@/components/elements";
 import { useTrips, useUpdateTrips } from "@/context";
+import { useEffect, useLayoutEffect } from "react";
 
 interface TripScrollProps {
   prefectures: PrefectureType[];
@@ -15,6 +16,10 @@ const TripScroll = ({ prefectures }: TripScrollProps) => {
   const tripsPerPage = 12;
   const trips = useTrips();
   const setTrips = useUpdateTrips();
+
+  useLayoutEffect(() => {
+    setTrips([]);
+  }, []);
 
   const tripsLoader = async (batch: number) => {
     const _trips = await getTripList(batch, tripsPerPage);

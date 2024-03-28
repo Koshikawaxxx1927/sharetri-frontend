@@ -24,6 +24,11 @@ import Signup from "./Signup";
 import Signin from "./Signin";
 import Header from "./Header";
 import PasswordForm from "./PasswordForm";
+import MenuButton from "./MenuButton";
+import FavoriteButton from "./FavoriteButton";
+import DisplayImage from "./DisplayImage";
+import UserIcon from "./UserIcon";
+import AccountMenu from "./AccountMenu";
 
 export {
   ImageCard,
@@ -52,4 +57,9 @@ export {
   Signin,
   Header,
   PasswordForm,
+  MenuButton,
+  FavoriteButton,
+  DisplayImage,
+  UserIcon,
+  AccountMenu,
 };

@@ -3,7 +3,7 @@ import React from "react";
 import PlaceIcon from "@mui/icons-material/Place";
 
 interface CardContentsProps {
-  id: number;
+  id: string;
   start: string;
   end: string;
   spot: string;
@@ -17,7 +17,7 @@ const CardContents = ({ id, start, end, spot }: CardContentsProps) => {
           {start} ~ {end}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          ID: {id}
+          {id}
         </Typography>
         <Typography
           variant="body2"

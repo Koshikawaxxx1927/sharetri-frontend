@@ -3,7 +3,7 @@ export default interface TripType {
   CreatedAt: string;
   UpdatedAt: string;
   DeletedAt: string;
-  userid: string;
+  uid: string;
   prefectureid: string;
   Spots: string;
   title: string;

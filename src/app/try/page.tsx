@@ -1,62 +1,62 @@
 "use client";
 
-import { ButtonElement, LinkButton, TextForm } from "@/components/elements";
-import { UserRegistrationType } from "@/types";
-import { Grid, Paper, Typography, TextField, Box } from "@mui/material";
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import { IconButton, Menu, MenuItem } from "@mui/material";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { useAuthContext } from "@/context";
+import { ButtonElement, LinkButton } from "@/components/elements";
 
-const Signup = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<UserRegistrationType>();
-  const submit = async (data: UserRegistrationType) => {};
+const AccountMenu: React.FC = () => {
+  const { user } = useAuthContext();
+
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogout = () => {};
 
   return (
-    <Grid>
-      <Paper
-        elevation={3}
-        sx={{
-          p: 4,
-          height: "70vh",
-          width: "50vh",
-          m: " 20px auto",
-        }}
-      >
-        <form onSubmit={handleSubmit(submit)}>
-          <Typography variant={"h5"} sx={{ m: "30px" }}>
-            Sign up
-          </Typography>
-          <TextForm
-            label="Email*"
-            name="email"
-            register={register}
-            errors={errors.email?.message}
-            sx={{ width: "100%", border: "none" }}
-          />
-          <TextForm
-            label="Password*"
-            name="password"
-            register={register}
-            errors={errors.password?.message}
-            sx={{ width: "100%", border: "none" }}
-          />
-          <Box mt={4}>
+    <>
+      <IconButton onClick={handleClick} color="inherit" aria-label="account">
+        <AccountCircleIcon sx={{ fontSize: 40 }} />
+      </IconButton>
+      <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+        {user ? (
+          <MenuItem>
             <ButtonElement
-              text="登録"
-              sx={{ width: "100%" }}
-              variant="contained"
+              text="サインアウト"
+              sx={{ color: "black", display: "block", width: "100%" }}
+              onClick={handleLogout}
             />
-            <Typography variant="caption">
-              <LinkButton text="アカウントをお持ちですか？" href="/signin" />
-            </Typography>
-          </Box>
-        </form>
-      </Paper>
-    </Grid>
+          </MenuItem>
+        ) : (
+          <>
+            <MenuItem>
+              <LinkButton
+                text="サインアップ"
+                href="/signup"
+                sx={{ color: "black", display: "block", width: "100%" }}
+              />
+            </MenuItem>
+            <MenuItem>
+              <LinkButton
+                text="サインイン"
+                href="/signin"
+                sx={{ color: "black", display: "block", width: "100%" }}
+              />
+            </MenuItem>
+          </>
+        )}
+      </Menu>
+    </>
   );
 };
 
-export default Signup;
+export default AccountMenu;

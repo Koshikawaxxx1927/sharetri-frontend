@@ -50,6 +50,10 @@ function SpotTabs() {
   const pathname = usePathname();
   const tripid = Number(pathname.split("/").pop());
 
+  React.useLayoutEffect(() => {
+    setSpots([]);
+  }, []);
+
   const spotsLoader = async (batch: number) => {
     const _spots = await getSpotList(tripid, batch, spotsPerPage);
     const spotsArray = [...spots, ..._spots];

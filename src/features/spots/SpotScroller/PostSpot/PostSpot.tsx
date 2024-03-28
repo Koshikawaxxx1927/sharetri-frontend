@@ -12,16 +12,13 @@ import {
   Typography,
 } from "@mui/material";
 import {
-  DateForm,
   DateTimeForm,
   MultiTextForm,
   NumberForm,
   OverflowScroll,
-  PulldownForm,
-  SwitchForm,
   TextForm,
 } from "@/components/elements";
-import { PrefectureType, SpotType } from "@/types";
+import { SpotType } from "@/types";
 import React from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { postSpot } from "@/utils/api";

@@ -19,7 +19,7 @@ const style = {
 };
 
 interface BasicModalProps {
-  text: string;
+  text?: string | undefined;
   textVariant?:
     | "h1"
     | "h2"

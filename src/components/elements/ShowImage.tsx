@@ -1,16 +1,15 @@
 import { Box } from "@mui/material";
 import Image from "next/image";
-import React from "react";
+import React, { JSXElementConstructor } from "react";
 import FilterIcon from "@mui/icons-material/Filter";
 import { ModalButton } from ".";
-import { PostTripImage } from "@/features";
 
 interface ShowImageProps {
   src: string;
-  children: React.ReactElement;
+  children?: React.ReactElement<any, string | JSXElementConstructor<any>>;
 }
 
-const ShowImage = ({ src, children }: ShowImageProps) => {
+const ShowImage = ({ src, children = <></> }: ShowImageProps) => {
   return (
     <Box
       sx={[
