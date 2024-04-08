@@ -9,12 +9,8 @@ import {
   CardContent,
   Typography,
 } from "@mui/material";
-import { pink } from "@mui/material/colors";
 import React, { useState } from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import ShareIcon from "@mui/icons-material/Share";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import FavoriteButton from "./FavoriteButton";
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -45,10 +41,6 @@ const CardDropDown = ({ text, children }: CardDropDownProps) => {
   return (
     <>
       <CardActions disableSpacing sx={{ backgroundColor: "#2aff2a" }}>
-        {/* <FavoriteButton favorite={favorite} onClick={favoriteOnClick} />
-        <IconButton aria-label="share">
-          <ShareIcon color="primary" />
-        </IconButton> */}
         {children}
         <ExpandMore
           expand={expanded}

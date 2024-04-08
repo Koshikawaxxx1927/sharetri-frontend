@@ -10,29 +10,27 @@ import TimelineDot from "@mui/lab/TimelineDot";
 import Typography from "@mui/material/Typography";
 
 interface TimelineElementProps {
-  id: string;
   starttime: string;
   endtime: string;
   name: string;
   memo: string;
-  onChange: (event: React.SyntheticEvent, newValue: number) => void;
+  // onChange: (event: React.SyntheticEvent, newValue: number) => void;
   children: React.ReactNode;
 }
 
 const TimelineElement = ({
-  id,
   starttime,
   endtime,
   name,
   memo,
-  onChange,
+  // onChange,
   children,
 }: TimelineElementProps) => {
   return (
     <TimelineItem
       sx={[
         {
-          cursor: "pointer",
+          // cursor: "pointer",
         },
         { "&:hover": { backgroundColor: "#eee" } },
       ]}
@@ -43,7 +41,6 @@ const TimelineElement = ({
         variant="body2"
         color="text.secondary"
       >
-        {id}
         <Typography component="div">{starttime}</Typography>
         <Typography component="div">|</Typography>
         <Typography component="div">{endtime}</Typography>

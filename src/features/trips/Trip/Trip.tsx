@@ -13,6 +13,7 @@ import PutTrip from "../PutTrip/PutTrip";
 import DeleteTrip from "../DeleteTrip/DeleteTrip";
 import {
   deleteFavoriteById,
+  getFavoriteByUidTripId,
   getFavoritesByTripID,
   getFavoritesByUid,
   getTripImage,
@@ -23,7 +24,9 @@ import PostTripImage from "../PostTripImage/PostTripImage";
 import ShareIcon from "@mui/icons-material/Share";
 import { FavoriteButton } from "@/components/elements";
 import { IconButton } from "@mui/material";
-import { useAuthContext } from "@/context";
+import { useAuthState } from "react-firebase-hooks/auth";
+import Link from "next/link";
+import { auth } from "@/auth";
 
 interface TripProps {
   trip: TripType;
@@ -33,8 +36,8 @@ interface TripProps {
 
 const Trip = ({ trip, prefecture, prefectures }: TripProps) => {
   const [src, setSrc] = useState("");
-  const { user } = useAuthContext();
-  const userid = user?.uid.toString();
+  const [user] = useAuthState(auth);
+  const userid = user?.uid;
   const [favoriteNumberByTripId, setFavoriteNumberByTripId] =
     useState<number>(0);
   const [initialIsFavorite, setInitialIsFavorite] = useState(false);
@@ -45,38 +48,43 @@ const Trip = ({ trip, prefecture, prefectures }: TripProps) => {
   };
   useEffect(() => {
     if (trip.imagepath !== "") {
-      imageFetch(trip.ID.toString());
+      imageFetch(trip.ID);
     }
   }, [trip.imagepath]);
 
   const fetchFavoriteNumberByTripId = async (tripid: string) => {
-    const favoritesById = await getFavoritesByTripID(tripid);
-    setFavoriteNumberByTripId(favoritesById.length);
-    if (user) {
-      const favoritesByUid = await getFavoritesByUid(userid);
-      const favoriteByUidTripId = favoritesByUid.filter(
-        (fav) => fav.tripid === trip.ID.toString()
-      );
-      setInitialIsFavorite(favoriteByUidTripId.length !== 0);
+    try {
+      const favoritesById = await getFavoritesByTripID(tripid);
+      setFavoriteNumberByTripId(favoritesById.length);
+    } catch (err) {
+      // Not Found
+    }
+    if (user && userid !== undefined) {
+      try {
+        const favoriteByUidTripId = await getFavoriteByUidTripId(
+          userid,
+          tripid
+        );
+        setInitialIsFavorite(favoriteByUidTripId !== undefined);
+      } catch (err) {
+        // Not Found
+      }
     }
   };
 
   useEffect(() => {
-    fetchFavoriteNumberByTripId(trip.ID.toString());
+    fetchFavoriteNumberByTripId(trip.ID);
   }, []);
   const favoriteClickHandler = async (isFavorite: boolean) => {
+    if (userid === undefined) return;
     if (isFavorite) {
-      const postedFavorite = await postFavorite(
-        userid?.toString(),
-        trip.ID.toString()
-      );
+      //
+      const postedFavorite = await postFavorite(userid, trip.ID);
       setFavoriteNumberByTripId((prev) => prev + 1);
     } else {
-      const favorites = await getFavoritesByUid(userid);
-      const favorite = favorites.filter(
-        (fav) => fav.tripid === trip.ID.toString()
-      )[0];
-      const deletedFavorite = await deleteFavoriteById(favorite.ID.toString());
+      // const favorites = await getFavoritesByUid(userid);
+      const favorite = await getFavoriteByUidTripId(userid, trip.ID);
+      const deletedFavorite = await deleteFavoriteById(userid, favorite.ID);
       setFavoriteNumberByTripId((prev) => prev - 1);
     }
   };
@@ -150,7 +158,12 @@ const Trip = ({ trip, prefecture, prefectures }: TripProps) => {
           favoriteOnClick={favoriteClickHandler}
         />
         <IconButton aria-label="share">
-          <ShareIcon color="primary" />
+          <Link
+            href={`https://twitter.com/intent/tweet?text=${trip.memo}&hashtags=Sharetri&url=http://localhost:3000/trip/${trip.ID}`}
+            target="_blank"
+          >
+            <ShareIcon color="primary" />
+          </Link>
         </IconButton>
       </CardDropDown>
     </Box>

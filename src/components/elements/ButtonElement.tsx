@@ -33,7 +33,7 @@ interface ButtonElementProps {
     | "warning"
     | undefined;
   variant?: "text" | "outlined" | "contained" | undefined;
-  onClick?: () => void | undefined;
+  onClick?: () => void | undefined | Promise<void>;
 }
 
 const ButtonElement = ({

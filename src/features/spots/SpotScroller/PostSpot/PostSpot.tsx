@@ -23,6 +23,8 @@ import React from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { postSpot } from "@/utils/api";
 import { useSpots, useUpdateSpots } from "@/context";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "@/auth";
 
 interface PostSpotProps {
   tripid: number;
@@ -40,23 +42,30 @@ const PostSpot = ({ tripid, handleClose = () => {} }: PostSpotProps) => {
     handleSubmit,
     formState: { errors },
   } = useForm<SpotType>();
-
+  const [user] = useAuthState(auth);
   const spots = useSpots();
   const setSpots = useUpdateSpots();
+  const starttimeSort = (a: SpotType, b: SpotType) => {
+    return a.starttime > b.starttime ? 1 : -1;
+  };
 
   const submit = async (data: SpotType) => {
-    const spot = await postSpot(
-      tripid,
-      data.name,
-      data.starttime,
-      data.endtime,
-      data.cost,
-      data.memo
-    );
-    handleAlert();
-    if (!spots.includes(spot)) {
-      spots.push(spot);
-      setSpots([...spots]);
+    if (user !== undefined && user) {
+      const spot = await postSpot(
+        user.uid,
+        tripid,
+        data.name,
+        data.starttime,
+        data.endtime,
+        data.cost,
+        data.memo
+      );
+      handleAlert();
+      if (!spots.includes(spot)) {
+        spots.push(spot);
+        spots.sort(starttimeSort);
+        setSpots([...spots]);
+      }
     }
   };
 

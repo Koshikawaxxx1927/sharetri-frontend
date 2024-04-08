@@ -7,7 +7,8 @@ import { ModalButton, UserIcon } from ".";
 import { Box, Typography } from "@mui/material";
 import { UserType } from "@/types";
 import { useEffect, useState } from "react";
-import { getUser } from "@/utils/api";
+import { getUser, getUserIcon } from "@/utils/api";
+import { getAuth } from "firebase-admin/auth";
 
 interface CardHeaderProps {
   uid: string;
@@ -16,10 +17,18 @@ interface CardHeaderProps {
 }
 
 const CardHeader = ({ uid, title, createdat }: CardHeaderProps) => {
+  // const [user] = useAuthState(auth);
   const [dbuser, setDbuser] = useState<UserType>();
+  const [usericonSrc, setUsericonSrc] = useState("");
   const fetchUser = async () => {
+    // const user = await getAuth().getUser(uid);
+    //
     const _dbuser = await getUser(uid);
     setDbuser(_dbuser);
+    if (_dbuser.iconpath !== "") {
+      const _usericonSrc = await getUserIcon(uid);
+      setUsericonSrc(_usericonSrc);
+    }
   };
   useEffect(() => {
     fetchUser();
@@ -29,8 +38,8 @@ const CardHeader = ({ uid, title, createdat }: CardHeaderProps) => {
       <Header
         avatar={
           <Box sx={{ position: "relative" }}>
+            <UserIcon src={usericonSrc} fontsize={40} />
             {/* <AccountCircleIcon sx={{ color: red[500], fontSize: 40 }} /> */}
-            <UserIcon user={dbuser} fontsize={40} />
             <ModalButton
               sx={{
                 position: "absolute",
@@ -43,7 +52,8 @@ const CardHeader = ({ uid, title, createdat }: CardHeaderProps) => {
               }}
             >
               <Box sx={{ textAlign: "center" }}>
-                <AccountCircleIcon sx={{ color: red[500], fontSize: 60 }} />
+                {/* <AccountCircleIcon sx={{ color: red[500], fontSize: 60 }} /> */}
+                <UserIcon src={usericonSrc} fontsize={60} />
                 <Typography
                   variant="body2"
                   color="text.secondary"

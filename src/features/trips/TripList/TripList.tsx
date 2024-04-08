@@ -1,14 +1,17 @@
 import { getPrefectureList } from "@/utils/api";
-import { PostTrip, TripScroll } from "@/features";
+import { PostTrip } from "@/features";
 import { Box, Grid } from "@mui/material";
 import { ModalButton } from "@/components/elements";
-import { TripProvider } from "@/context";
 
-const TripList = async () => {
+interface TripListProps {
+  children: React.ReactNode;
+}
+
+const TripList = async ({ children }: TripListProps) => {
   const prefectures = await getPrefectureList();
   return (
     <Box>
-      <TripScroll prefectures={prefectures} />
+      {children}
       <Box sx={{ margin: "20px" }}>
         <Grid
           container

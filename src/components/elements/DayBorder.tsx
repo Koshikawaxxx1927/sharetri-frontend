@@ -7,8 +7,9 @@ interface DayBorderProps {
 }
 
 const DayBorder = ({ currentDay, newDay }: DayBorderProps) => {
-  const _currentDay = new Date(currentDay);
-  const _newDay = new Date(newDay);
+  // const _currentDay = new Date(currentDay);
+  // const _newDay = new Date(newDay);
+
   return <div>{currentDay < newDay && <Box>{newDay}</Box>}</div>;
 };
 

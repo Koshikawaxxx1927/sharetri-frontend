@@ -6,7 +6,8 @@ import {
   postTrip,
   putTrip,
   postTripImage,
-  // putFavoriteTrip,
+  getTrip,
+  getMyTripList,
 } from "./trip";
 import { getSpotList, postSpot, putSpot, postSpotImage } from "./spot";
 import {
@@ -14,8 +15,16 @@ import {
   getFavoritesByUid,
   getFavoritesByTripID,
   deleteFavoriteById,
+  getFavoriteByUidTripId,
 } from "./favorite";
-import { getUser, getUserIcon } from "./user";
+import {
+  getUser,
+  getUserIcon,
+  deleteLoginUser,
+  putUser,
+  postUserIcon,
+} from "./user";
+// import { fetchUserFromGoogle } from "./usergoogle";
 
 export {
   getPrefecture,
@@ -36,4 +45,11 @@ export {
   deleteFavoriteById,
   getUser,
   getUserIcon,
+  deleteLoginUser,
+  putUser,
+  postUserIcon,
+  getTrip,
+  getFavoriteByUidTripId,
+  // fetchUserFromGoogle,
+  getMyTripList,
 };

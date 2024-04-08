@@ -34,6 +34,33 @@ const getTripList = async (
   return data.trips;
 };
 
+const getMyTripList = async (
+  userid: string,
+  offset: number,
+  limit: number
+): Promise<TripType[]> => {
+  const res = await fetch(
+    `http://localhost:8080/login/api/v1/${userid}/triplist?offset=${offset}&limit=${limit}`,
+    {
+      cache: "no-store",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+      },
+    }
+  );
+  const data = await res.json();
+  if (data.trips === undefined) {
+    return [];
+  }
+  data.trips.map((trip: TripType) => {
+    trip.startdate = trip.startdate.split("T")[0];
+  });
+  data.trips.map((trip: TripType) => {
+    trip.enddate = trip.enddate.split("T")[0];
+  });
+  return data.trips;
+};
+
 const getTripImage = async (tripid: string): Promise<string> => {
   const res = await fetch(`http://localhost:8080/tripimage/${tripid}`);
   const blob = await res.blob();
@@ -42,7 +69,7 @@ const getTripImage = async (tripid: string): Promise<string> => {
 };
 
 const postTrip = async (
-  userid: string | undefined,
+  userid: string,
   title: string,
   startdate: string,
   enddate: string,
@@ -59,17 +86,22 @@ const postTrip = async (
     imagepath: "",
     ispublic: ispublic,
   };
-  const res = await fetch(
-    `http://localhost:8080/trip/login/api/v1/trip/${userid}`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-      },
-      body: JSON.stringify(bodyData),
-    }
-  );
+  const res = await fetch(`http://localhost:8080/login/api/v1/${userid}/trip`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+    },
+    body: JSON.stringify(bodyData),
+  });
+  const data = await res.json();
+  data.trip.startdate = data.trip.startdate.split("T")[0];
+  data.trip.enddate = data.trip.enddate.split("T")[0];
+  return data.trip;
+};
+
+const getTrip = async (tripid: string): Promise<TripType> => {
+  const res = await fetch(`http://localhost:8080/trip/${tripid}`);
   const data = await res.json();
   data.trip.startdate = data.trip.startdate.split("T")[0];
   data.trip.enddate = data.trip.enddate.split("T")[0];
@@ -77,8 +109,8 @@ const postTrip = async (
 };
 
 const putTrip = async (
-  userid: string | undefined,
-  tripid: number,
+  userid: string,
+  tripid: string,
   title: string,
   startdate: string,
   enddate: string,
@@ -97,12 +129,12 @@ const putTrip = async (
     favorite: favorite,
   };
   const res = await fetch(
-    `http://localhost:8080/trip/user/api/v1/trip/${tripid}`,
+    `http://localhost:8080/login/api/v1/${userid}/trip/${tripid}`,
     {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("jwt")};UID ${userid}`,
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
       },
       body: JSON.stringify(bodyData),
     }
@@ -114,15 +146,15 @@ const putTrip = async (
 };
 
 const deleteTrip = async (
-  userid: string | undefined,
+  userid: string,
   tripid: string
 ): Promise<TripType[]> => {
   const res = await fetch(
-    `http://localhost:8080/trip/user/api/v1/trip/${tripid}`,
+    `http://localhost:8080/login/api/v1/${userid}/trip/${tripid}`,
     {
       method: "DELETE",
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("jwt")};UID ${userid}`,
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
       },
     }
   );
@@ -133,19 +165,18 @@ const deleteTrip = async (
 };
 
 const postTripImage = async (
-  tripimage: File | undefined,
+  tripimage: File,
   tripid: string,
-  userid: string | undefined
+  userid: string
 ) => {
-  if (tripimage === undefined) return;
   const formData = new FormData();
   formData.append("image", tripimage, "image.png");
   const res = await fetch(
-    `http://localhost:8080/trip/user/api/v1/tripimage/${tripid}`,
+    `http://localhost:8080/login/api/v1/${userid}/tripimage/${tripid}`,
     {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("jwt")};UID ${userid}`,
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
       },
       body: formData,
     }
@@ -156,43 +187,6 @@ const postTripImage = async (
   return data.trip;
 };
 
-// const putFavoriteTrip = async (
-//   userid: string | undefined,
-//   tripid: number,
-//   title: string,
-//   startdate: string,
-//   enddate: string,
-//   prefectureid: string,
-//   memo: string,
-//   ispublic: boolean,
-//   favorite: number
-// ): Promise<TripType> => {
-//   const bodyData = {
-//     prefectureid: `${prefectureid}`,
-//     title: title,
-//     startdate: `${startdate}T00:00:00.000+09:00`,
-//     enddate: `${enddate}T00:00:00.000+09:00`,
-//     memo: memo,
-//     ispublic: ispublic,
-//     favorite: favorite,
-//   };
-//   const res = await fetch(
-//     `http://localhost:8080/trip/login/api/v1/trip/${tripid}`,
-//     {
-//       method: "PUT",
-//       headers: {
-//         "Content-Type": "application/json",
-//         Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-//       },
-//       body: JSON.stringify(bodyData),
-//     }
-//   );
-//   const data = await res.json();
-//   data.trip.startdate = data.trip.startdate.split("T")[0];
-//   data.trip.enddate = data.trip.enddate.split("T")[0];
-//   return data.trip;
-// };
-
 export {
   getAllTripList,
   getTripList,
@@ -201,5 +195,6 @@ export {
   putTrip,
   deleteTrip,
   postTripImage,
-  // putFavoriteTrip,
+  getTrip,
+  getMyTripList,
 };

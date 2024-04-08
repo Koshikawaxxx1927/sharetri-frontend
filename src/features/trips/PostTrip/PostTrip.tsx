@@ -25,7 +25,9 @@ import { PrefectureType, TripType } from "@/types";
 import { postTrip } from "@/utils/api";
 import React from "react";
 import CloseIcon from "@mui/icons-material/Close";
-import { useAuthContext, useTrips, useUpdateTrips } from "@/context";
+import { useTrips, useUpdateTrips } from "@/context";
+import { auth } from "@/auth";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 interface PostTripProps {
   prefectures: PrefectureType[];
@@ -43,26 +45,29 @@ const PostTrip = ({ prefectures, handleClose = () => {} }: PostTripProps) => {
     handleSubmit,
     formState: { errors },
   } = useForm<TripType>();
-  const { user } = useAuthContext();
-  const userid = user?.uid.toString();
+  const [user] = useAuthState(auth);
+  const userid = user?.uid;
 
   const trips = useTrips();
   const setTrips = useUpdateTrips();
 
   const submit = async (data: TripType) => {
-    const trip = await postTrip(
-      userid,
-      data.title,
-      data.startdate,
-      data.enddate,
-      data.prefectureid,
-      data.memo,
-      Boolean(data.ispublic)
-    );
-    handleAlert();
-    if (!trips.includes(trip)) {
-      trips.push(trip);
-      setTrips([...trips]);
+    if (user) {
+      const trip = await postTrip(
+        user.uid,
+        data.title,
+        data.startdate,
+        data.enddate,
+        data.prefectureid,
+        data.memo,
+        Boolean(data.ispublic)
+      );
+      handleAlert();
+
+      if (!trips.includes(trip)) {
+        trips.push(trip);
+        setTrips([...trips]);
+      }
     }
   };
 
@@ -89,7 +94,7 @@ const PostTrip = ({ prefectures, handleClose = () => {} }: PostTripProps) => {
           </Typography>
 
           <form onSubmit={handleSubmit(submit)}>
-            <Grid container>
+            {/* <Grid container>
               <Grid item xs={7}></Grid>
               <Grid item xs={5}>
                 <SwitchForm
@@ -99,7 +104,7 @@ const PostTrip = ({ prefectures, handleClose = () => {} }: PostTripProps) => {
                   errors={errors.ispublic?.message}
                 />
               </Grid>
-            </Grid>
+            </Grid> */}
             <Stack spacing={1}>
               <TextForm
                 label="タイトル"

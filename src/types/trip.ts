@@ -1,5 +1,5 @@
 export default interface TripType {
-  ID: number;
+  ID: string;
   CreatedAt: string;
   UpdatedAt: string;
   DeletedAt: string;

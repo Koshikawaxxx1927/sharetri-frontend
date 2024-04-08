@@ -17,8 +17,11 @@ const TripScroll = ({ prefectures }: TripScrollProps) => {
   const trips = useTrips();
   const setTrips = useUpdateTrips();
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     setTrips([]);
+    return () => {
+      setTrips(new Array());
+    };
   }, []);
 
   const tripsLoader = async (batch: number) => {

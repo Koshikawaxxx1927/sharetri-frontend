@@ -17,7 +17,7 @@ import {
   OverflowScroll,
 } from "@/components/elements";
 import { Grid } from "@mui/material";
-import { SpotProvider, useSpots, useUpdateSpots } from "@/context";
+import { useSpots, useUpdateSpots } from "@/context";
 
 function a11yProps(index: number) {
   return {
@@ -52,6 +52,9 @@ function SpotTabs() {
 
   React.useLayoutEffect(() => {
     setSpots([]);
+    return () => {
+      setSpots([]);
+    };
   }, []);
 
   const spotsLoader = async (batch: number) => {

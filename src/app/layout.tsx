@@ -2,7 +2,7 @@ import { Header } from "@/components/elements";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { AuthProvider, SpotProvider, TripProvider } from "@/context";
+import { SpotProvider, TripProvider } from "@/context";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,14 +19,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} bg-slate-200`}>
-        <AuthProvider>
-          <TripProvider>
-            <SpotProvider>
-              <Header sx={{ marginBottom: "15px" }} />
-              {children}
-            </SpotProvider>
-          </TripProvider>
-        </AuthProvider>
+        {/* <LoginUserProvider> */}
+        <TripProvider>
+          <SpotProvider>
+            <Header sx={{ marginBottom: "15px" }} />
+            {children}
+          </SpotProvider>
+        </TripProvider>
+        {/* </LoginUserProvider> */}
       </body>
     </html>
   );

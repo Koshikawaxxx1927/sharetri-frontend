@@ -13,6 +13,10 @@ import PutTrip from "./trips/PutTrip/PutTrip";
 import PutSpot from "./spots/SpotScroller/PutSpot/PutSpot";
 import PostTripImage from "./trips/PostTripImage/PostTripImage";
 import PostSpotImage from "./spots/PostSpotImage/PostSpotImage";
+import PutUser from "./users/PutUser/PutUser";
+// import MyTripScroll from "./trips/MyTripScroll/MyTripScroll";
+// import DeleteUser from "./users/DeleteUser/DeleteUser";
+// import PostUserIcon from "./users/PostUserIcon/PostUserIcon";
 
 export {
   Spot,
@@ -30,4 +34,8 @@ export {
   PutSpot,
   PostTripImage,
   PostSpotImage,
+  PutUser,
+  // MyTripScroll,
+  // DeleteUser,
+  // PostUserIcon,
 };

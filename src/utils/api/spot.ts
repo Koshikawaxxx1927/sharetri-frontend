@@ -31,6 +31,7 @@ const getSpotImage = async (spotid: string): Promise<string> => {
 };
 
 const postSpot = async (
+  userid: string,
   tripid: number,
   name: string,
   starttime: string,
@@ -47,7 +48,7 @@ const postSpot = async (
     memo: memo,
   };
   const res = await fetch(
-    `http://localhost:8080/spot/login/api/v1/spot/${tripid}`,
+    `http://localhost:8080/login/api/v1/${userid}/spot/${tripid}`,
     {
       method: "POST",
       headers: {
@@ -66,9 +67,9 @@ const postSpot = async (
 };
 
 const putSpot = async (
-  userid: string | undefined,
-  tripid: string | undefined,
-  spotid: number,
+  userid: string,
+  tripid: string,
+  spotid: string,
   name: string,
   starttime: string,
   endtime: string,
@@ -85,12 +86,12 @@ const putSpot = async (
   };
 
   const res = await fetch(
-    `http://localhost:8080/spot/user/api/v1/spot/${spotid}`,
+    `http://localhost:8080/login/api/v1/${userid}/spot/${spotid}`,
     {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("jwt")};UID ${userid}`,
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
       },
       body: JSON.stringify(bodyData),
     }
@@ -104,15 +105,15 @@ const putSpot = async (
 };
 
 const deleteSpot = async (
-  userid: string | undefined,
+  userid: string,
   spot: SpotType
 ): Promise<SpotType[]> => {
   const res = await fetch(
-    `http://localhost:8080/spot/user/api/v1/spot/${spot.ID}`,
+    `http://localhost:8080/login/api/v1/${userid}/spot/${spot.ID}`,
     {
       method: "DELETE",
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("jwt")};UID ${userid}`,
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
       },
     }
   );
@@ -125,19 +126,18 @@ const deleteSpot = async (
 };
 
 const postSpotImage = async (
-  spotimage: File | undefined,
+  spotimage: File,
   spotid: string,
-  userid: string | undefined
+  userid: string
 ) => {
-  if (spotimage === undefined) return;
   const formData = new FormData();
   formData.append("image", spotimage, "image.png");
   const res = await fetch(
-    `http://localhost:8080/spot/user/api/v1/spotimage/${spotid}`,
+    `http://localhost:8080/login/api/v1/${userid}/spotimage/${spotid}`,
     {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("jwt")};UID ${userid}`,
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
       },
       body: formData,
     }
