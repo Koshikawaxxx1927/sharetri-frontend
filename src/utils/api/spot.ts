@@ -24,9 +24,12 @@ const getSpotList = async (
 };
 
 const getSpotImage = async (spotid: string): Promise<string> => {
-  const res = await fetch(`http://localhost:8080/spotimage/${spotid}`);
+  const res = await fetch(`http://localhost:8080/spotimage/${spotid}`, {
+    // mode: "no-cors",消したらうまくいかない
+  });
   const blob = await res.blob();
   const src = URL.createObjectURL(blob);
+  console.log("spot Src: ", src);
   return src;
 };
 

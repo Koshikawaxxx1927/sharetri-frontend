@@ -29,10 +29,10 @@ import { useTrips, useUpdateTrips } from "@/context";
 import { deleteTrip } from "@/utils/api/trip";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/auth";
+import { useClose } from "@/components/elements/ModalButton";
 
 interface DeleteTripProps {
   trip: TripType;
-  handleClose?: () => void;
 }
 
 const closeButtonStyle = {
@@ -40,7 +40,8 @@ const closeButtonStyle = {
   textAlign: "right",
 };
 
-const DeleteTrip = ({ trip, handleClose = () => {} }: DeleteTripProps) => {
+const DeleteTrip = ({ trip }: DeleteTripProps) => {
+  const handleClose = useClose();
   const trips = useTrips();
   const setTrips = useUpdateTrips();
   const [user] = useAuthState(auth);

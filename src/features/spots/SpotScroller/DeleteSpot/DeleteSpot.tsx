@@ -8,10 +8,10 @@ import { deleteSpot } from "@/utils/api/spot";
 import { SpotType } from "@/types";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/auth";
+import { useClose } from "@/components/elements/ModalButton";
 
 interface DeleteSpotProps {
   spot: SpotType;
-  handleClose?: () => void;
 }
 
 const closeButtonStyle = {
@@ -19,7 +19,8 @@ const closeButtonStyle = {
   textAlign: "right",
 };
 
-const DeleteSpot = ({ spot, handleClose = () => {} }: DeleteSpotProps) => {
+const DeleteSpot = ({ spot }: DeleteSpotProps) => {
+  const handleClose = useClose();
   const spots = useSpots();
   const setSpots = useUpdateSpots();
   const [user] = useAuthState(auth);

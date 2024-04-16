@@ -28,10 +28,10 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useTrips, useUpdateTrips } from "@/context";
 import { auth } from "@/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { useClose } from "@/components/elements/ModalButton";
 
 interface PostTripProps {
   prefectures: PrefectureType[];
-  handleClose?: () => void;
 }
 
 const closeButtonStyle = {
@@ -39,14 +39,14 @@ const closeButtonStyle = {
   textAlign: "right",
 };
 
-const PostTrip = ({ prefectures, handleClose = () => {} }: PostTripProps) => {
+const PostTrip = ({ prefectures }: PostTripProps) => {
+  const handleClose = useClose();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<TripType>();
   const [user] = useAuthState(auth);
-  const userid = user?.uid;
 
   const trips = useTrips();
   const setTrips = useUpdateTrips();
@@ -85,7 +85,11 @@ const PostTrip = ({ prefectures, handleClose = () => {} }: PostTripProps) => {
       <Container maxWidth="sm" sx={{ p: 2 }}>
         <OverflowScroll height="75vh">
           <Box sx={closeButtonStyle}>
-            <IconButton onClick={handleClose}>
+            <IconButton
+              onClick={() => {
+                handleClose();
+              }}
+            >
               <CloseIcon />
             </IconButton>
           </Box>

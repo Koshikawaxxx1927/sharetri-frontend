@@ -8,7 +8,6 @@ const postUser = async (uid: string, name: string): Promise<UserType> => {
 
   const res = await fetch(`http://localhost:8080/login/api/v1/${uid}/user`, {
     method: "POST",
-    // mode: "cors",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${localStorage.getItem("jwt")}`,
@@ -55,14 +54,13 @@ const deleteLoginUser = async (uid: string): Promise<UserType[]> => {
 };
 
 const getUser = async (uid: string): Promise<UserType> => {
-  const res = await fetch(`http://localhost:8080/user/${uid}`, {
-    cache: "no-store",
-  });
+  const res = await fetch(`http://localhost:8080/user/${uid}`);
   const data = await res.json();
   return data.user;
 };
 
 const getUserIcon = async (uid: string): Promise<string> => {
+  console.log("getUserIcon");
   const res = await fetch(`http://localhost:8080/usericon/${uid}`, {
     cache: "no-store",
   });

@@ -62,7 +62,9 @@ const getMyTripList = async (
 };
 
 const getTripImage = async (tripid: string): Promise<string> => {
-  const res = await fetch(`http://localhost:8080/tripimage/${tripid}`);
+  const res = await fetch(`http://localhost:8080/tripimage/${tripid}`, {
+    // mode: "no-cors"
+  });
   const blob = await res.blob();
   const src = URL.createObjectURL(blob);
   return src;
@@ -91,6 +93,8 @@ const postTrip = async (
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+      // "Access-Control-Allow-Origin": "http://localhost:8080/",
+      // "Access-Control-Allow-Credentials": "true",
     },
     body: JSON.stringify(bodyData),
   });

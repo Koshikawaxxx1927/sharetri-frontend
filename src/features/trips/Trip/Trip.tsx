@@ -47,6 +47,7 @@ const Trip = ({ trip, prefecture, prefectures }: TripProps) => {
     setSrc(_src);
   };
   useEffect(() => {
+    console.log("UseEffect Trip");
     if (trip.imagepath !== "") {
       imageFetch(trip.ID);
     }
@@ -150,22 +151,23 @@ const Trip = ({ trip, prefecture, prefectures }: TripProps) => {
             />
           </Grid>
         </Grid>
+
+        <CardDropDown text={trip.memo}>
+          <FavoriteButton
+            initialIsFavorite={initialIsFavorite}
+            favoriteNumber={favoriteNumberByTripId}
+            favoriteOnClick={favoriteClickHandler}
+          />
+          <IconButton aria-label="share">
+            <Link
+              href={`https://twitter.com/intent/tweet?text=${trip.memo}&hashtags=Sharetri&url=http://localhost:3000/trip/${trip.ID}`}
+              target="_blank"
+            >
+              <ShareIcon color="primary" />
+            </Link>
+          </IconButton>
+        </CardDropDown>
       </ImageCard>
-      <CardDropDown text={trip.memo}>
-        <FavoriteButton
-          initialIsFavorite={initialIsFavorite}
-          favoriteNumber={favoriteNumberByTripId}
-          favoriteOnClick={favoriteClickHandler}
-        />
-        <IconButton aria-label="share">
-          <Link
-            href={`https://twitter.com/intent/tweet?text=${trip.memo}&hashtags=Sharetri&url=http://localhost:3000/trip/${trip.ID}`}
-            target="_blank"
-          >
-            <ShareIcon color="primary" />
-          </Link>
-        </IconButton>
-      </CardDropDown>
     </Box>
   );
 };

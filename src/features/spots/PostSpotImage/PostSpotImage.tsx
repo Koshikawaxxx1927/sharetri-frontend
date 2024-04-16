@@ -2,6 +2,7 @@
 
 import { auth } from "@/auth";
 import { DisplayImage } from "@/components/elements";
+import { useClose } from "@/components/elements/ModalButton";
 import { useSpots, useTrips, useUpdateSpots } from "@/context";
 import { SpotType, TripType } from "@/types";
 import { getTrip, postSpotImage } from "@/utils/api";
@@ -13,15 +14,10 @@ interface PostSpotImageProps {
   spot: SpotType;
   src: string;
   children: React.ReactNode;
-  handleClose?: () => void;
 }
 
-const PostSpotImage = ({
-  spot,
-  src,
-  children,
-  handleClose = () => {},
-}: PostSpotImageProps) => {
+const PostSpotImage = ({ spot, src, children }: PostSpotImageProps) => {
+  const handleClose = useClose();
   const spots = useSpots();
   const setdSpots = useUpdateSpots();
   const spotid = spot.ID;

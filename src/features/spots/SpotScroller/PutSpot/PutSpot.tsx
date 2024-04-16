@@ -26,10 +26,10 @@ import { useSpots, useUpdateSpots } from "@/context";
 import { usePathname } from "next/navigation";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/auth";
+import { useClose } from "@/components/elements/ModalButton";
 
 interface PutSpotProps {
   spot: SpotType;
-  handleClose?: () => void;
 }
 
 const closeButtonStyle = {
@@ -37,7 +37,8 @@ const closeButtonStyle = {
   textAlign: "right",
 };
 
-const PutSpot = ({ spot, handleClose = () => {} }: PutSpotProps) => {
+const PutSpot = ({ spot }: PutSpotProps) => {
+  const handleClose = useClose();
   const {
     register,
     handleSubmit,

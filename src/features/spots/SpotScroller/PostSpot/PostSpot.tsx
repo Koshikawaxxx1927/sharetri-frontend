@@ -25,10 +25,10 @@ import { postSpot } from "@/utils/api";
 import { useSpots, useUpdateSpots } from "@/context";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/auth";
+import { useClose } from "@/components/elements/ModalButton";
 
 interface PostSpotProps {
   tripid: number;
-  handleClose?: () => void;
 }
 
 const closeButtonStyle = {
@@ -36,7 +36,8 @@ const closeButtonStyle = {
   textAlign: "right",
 };
 
-const PostSpot = ({ tripid, handleClose = () => {} }: PostSpotProps) => {
+const PostSpot = ({ tripid }: PostSpotProps) => {
+  const handleClose = useClose();
   const {
     register,
     handleSubmit,

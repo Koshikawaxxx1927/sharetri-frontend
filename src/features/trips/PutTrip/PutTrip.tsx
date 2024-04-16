@@ -28,11 +28,11 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useTrips, useUpdateTrips } from "@/context";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/auth";
+import { useClose } from "@/components/elements/ModalButton";
 
 interface PutTripProps {
   prefectures: PrefectureType[];
   trip: TripType;
-  handleClose?: () => void;
 }
 
 const closeButtonStyle = {
@@ -40,11 +40,8 @@ const closeButtonStyle = {
   textAlign: "right",
 };
 
-const PutTrip = ({
-  prefectures,
-  trip,
-  handleClose = () => {},
-}: PutTripProps) => {
+const PutTrip = ({ prefectures, trip }: PutTripProps) => {
+  const handleClose = useClose();
   const {
     register,
     handleSubmit,

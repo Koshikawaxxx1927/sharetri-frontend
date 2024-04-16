@@ -35,9 +35,11 @@ const signin = async () => {
     const res = await fetch(usericonPath);
     const blob = await res.blob();
     const usericon = new File([blob], "image.png");
-
+    console.log("Before Usericon", result.user.uid);
     await postUserIcon(usericon, result.user.uid);
+    console.log("After Usericon");
   } catch (error) {
+    console.log("エラー内容", error);
     localStorage.removeItem("jwt");
     await signOut(auth);
   }

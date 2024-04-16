@@ -2,6 +2,7 @@
 
 import { auth } from "@/auth";
 import { DisplayImage } from "@/components/elements";
+import { useClose } from "@/components/elements/ModalButton";
 import { useTrips, useUpdateTrips } from "@/context";
 import { TripType } from "@/types";
 import { postTripImage } from "@/utils/api";
@@ -13,15 +14,10 @@ interface PostTripImageProps {
   trip: TripType;
   src: string;
   children: React.ReactNode;
-  handleClose?: () => void;
 }
 
-const PostTripImage = ({
-  trip,
-  src = "",
-  children,
-  handleClose = () => {},
-}: PostTripImageProps) => {
+const PostTripImage = ({ trip, src = "", children }: PostTripImageProps) => {
+  const handleClose = useClose();
   const trips = useTrips();
   const tripid = trip.ID;
   const [user] = useAuthState(auth);

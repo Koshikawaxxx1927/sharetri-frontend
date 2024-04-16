@@ -48,6 +48,7 @@ const Spot = ({ spot, spotname }: SpotProps) => {
     setSrc(_src);
   };
   useEffect(() => {
+    console.log("UseEffect Spot");
     if (spot.imagepath !== "") {
       imageFetch(spot.ID);
     }
@@ -105,18 +106,18 @@ const Spot = ({ spot, spotname }: SpotProps) => {
                 </Grid>
               </Grid>
             )}
+            <CardDropDown text={spot.memo}>
+              <IconButton aria-label="share">
+                <Link
+                  href={`https://twitter.com/intent/tweet?text=${spot.memo}&hashtags=Sharetri&url=http://localhost:3000/trip/${spot.tripid}`}
+                  target="_blank"
+                >
+                  <ShareIcon color="primary" />
+                </Link>
+              </IconButton>
+            </CardDropDown>
           </ImageCard>
         )}
-        <CardDropDown text={spot.memo}>
-          <IconButton aria-label="share">
-            <Link
-              href={`https://twitter.com/intent/tweet?text=${spot.memo}&hashtags=Sharetri&url=http://localhost:3000/trip/${spot.tripid}`}
-              target="_blank"
-            >
-              <ShareIcon color="primary" />
-            </Link>
-          </IconButton>
-        </CardDropDown>
       </>
     </Box>
   );
