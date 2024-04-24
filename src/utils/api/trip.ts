@@ -1,57 +1,33 @@
 import { TripType } from "@/types/index";
 
-const getAllTripList = async (): Promise<TripType[]> => {
-  const res = await fetch("http://localhost:8080/tripalllist", {
-    cache: "no-store",
-  });
-  const data = await res.json();
-  data.trips.map((trip: TripType) => {
-    trip.startdate = trip.startdate.split("T")[0];
-  });
-  data.trips.map((trip: TripType) => {
-    trip.enddate = trip.enddate.split("T")[0];
-  });
-  return data.trips;
-};
+// const getAllTripList = async (): Promise<TripType[]> => {
+//   const res = await fetch("${process.env.NEXT_PUBLIC_END_POINT}/tripalllist", {
+//     cache: "no-store",
+//   });
+//   const data = await res.json();
+//   data.trips.map((trip: TripType) => {
+//     trip.startdate = trip.startdate.split("T")[0];
+//   });
+//   data.trips.map((trip: TripType) => {
+//     trip.enddate = trip.enddate.split("T")[0];
+//   });
+//   return data.trips;
+// };
 
 const getTripList = async (
   offset: number,
   limit: number
 ): Promise<TripType[]> => {
   const res = await fetch(
-    `http://localhost:8080/triplist?offset=${offset}&limit=${limit}`,
+    `${process.env.NEXT_PUBLIC_END_POINT}/triplist?offset=${offset}&limit=${limit}`,
     {
       cache: "no-store",
     }
   );
-  const data = await res.json();
-  data.trips.map((trip: TripType) => {
-    trip.startdate = trip.startdate.split("T")[0];
-  });
-  data.trips.map((trip: TripType) => {
-    trip.enddate = trip.enddate.split("T")[0];
-  });
-  return data.trips;
-};
-
-const getMyTripList = async (
-  userid: string,
-  offset: number,
-  limit: number
-): Promise<TripType[]> => {
-  const res = await fetch(
-    `http://localhost:8080/login/api/v1/${userid}/triplist?offset=${offset}&limit=${limit}`,
-    {
-      cache: "no-store",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-      },
-    }
-  );
-  const data = await res.json();
-  if (data.trips === undefined) {
+  if (res.status === 404) {
     return [];
   }
+  const data = await res.json();
   data.trips.map((trip: TripType) => {
     trip.startdate = trip.startdate.split("T")[0];
   });
@@ -61,10 +37,43 @@ const getMyTripList = async (
   return data.trips;
 };
 
+// const getMyTripList = async (
+//   userid: string,
+//   offset: number,
+//   limit: number
+// ): Promise<TripType[]> => {
+//   const res = await fetch(
+//     `${process.env.NEXT_PUBLIC_END_POINT}/${process.env.NEXT_PUBLIC_LOGIN_PATH}/${userid}/triplist?offset=${offset}&limit=${limit}`,
+//     {
+//       cache: "no-store",
+//       headers: {
+//         Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+//       },
+//     }
+//   );
+//   const data = await res.json();
+//   if (data.trips === undefined) {
+//     return [];
+//   }
+//   data.trips.map((trip: TripType) => {
+//     trip.startdate = trip.startdate.split("T")[0];
+//   });
+//   data.trips.map((trip: TripType) => {
+//     trip.enddate = trip.enddate.split("T")[0];
+//   });
+//   return data.trips;
+// };
+
 const getTripImage = async (tripid: string): Promise<string> => {
-  const res = await fetch(`http://localhost:8080/tripimage/${tripid}`, {
-    // mode: "no-cors"
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_END_POINT}/tripimage/${tripid}`,
+    {
+      // mode: "no-cors"
+    }
+  );
+  if (res.status === 404) {
+    return "";
+  }
   const blob = await res.blob();
   const src = URL.createObjectURL(blob);
   return src;
@@ -88,24 +97,30 @@ const postTrip = async (
     imagepath: "",
     ispublic: ispublic,
   };
-  const res = await fetch(`http://localhost:8080/login/api/v1/${userid}/trip`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-      // "Access-Control-Allow-Origin": "http://localhost:8080/",
-      // "Access-Control-Allow-Credentials": "true",
-    },
-    body: JSON.stringify(bodyData),
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_END_POINT}/${process.env.NEXT_PUBLIC_LOGIN_PATH}/${userid}/trip`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+      },
+      body: JSON.stringify(bodyData),
+    }
+  );
   const data = await res.json();
   data.trip.startdate = data.trip.startdate.split("T")[0];
   data.trip.enddate = data.trip.enddate.split("T")[0];
   return data.trip;
 };
 
-const getTrip = async (tripid: string): Promise<TripType> => {
-  const res = await fetch(`http://localhost:8080/trip/${tripid}`);
+const getTrip = async (tripid: string): Promise<TripType | undefined> => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_END_POINT}/trip/${tripid}`
+  );
+  if (res.status === 404) {
+    return undefined;
+  }
   const data = await res.json();
   data.trip.startdate = data.trip.startdate.split("T")[0];
   data.trip.enddate = data.trip.enddate.split("T")[0];
@@ -133,7 +148,7 @@ const putTrip = async (
     favorite: favorite,
   };
   const res = await fetch(
-    `http://localhost:8080/login/api/v1/${userid}/trip/${tripid}`,
+    `${process.env.NEXT_PUBLIC_END_POINT}/${process.env.NEXT_PUBLIC_LOGIN_PATH}/${userid}/trip/${tripid}`,
     {
       method: "PUT",
       headers: {
@@ -154,7 +169,7 @@ const deleteTrip = async (
   tripid: string
 ): Promise<TripType[]> => {
   const res = await fetch(
-    `http://localhost:8080/login/api/v1/${userid}/trip/${tripid}`,
+    `${process.env.NEXT_PUBLIC_END_POINT}/${process.env.NEXT_PUBLIC_LOGIN_PATH}/${userid}/trip/${tripid}`,
     {
       method: "DELETE",
       headers: {
@@ -176,7 +191,7 @@ const postTripImage = async (
   const formData = new FormData();
   formData.append("image", tripimage, "image.png");
   const res = await fetch(
-    `http://localhost:8080/login/api/v1/${userid}/tripimage/${tripid}`,
+    `${process.env.NEXT_PUBLIC_END_POINT}/${process.env.NEXT_PUBLIC_LOGIN_PATH}/${userid}/tripimage/${tripid}`,
     {
       method: "POST",
       headers: {
@@ -192,7 +207,7 @@ const postTripImage = async (
 };
 
 export {
-  getAllTripList,
+  // getAllTripList,
   getTripList,
   getTripImage,
   postTrip,
@@ -200,5 +215,5 @@ export {
   deleteTrip,
   postTripImage,
   getTrip,
-  getMyTripList,
+  // getMyTripList,
 };

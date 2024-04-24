@@ -17,7 +17,6 @@ export default function MenuButton() {
 
   return (
     <>
-      {/* <Button onClick={toggleDrawer(true)}>Open drawer</Button> */}
       <MenuIcon onClick={toggleDrawer(true)} />
       <Drawer open={open} onClose={toggleDrawer(false)}>
         <DrawerMenu onClick={clickHandler} />

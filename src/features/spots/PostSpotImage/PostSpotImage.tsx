@@ -1,8 +1,9 @@
 "use client";
 
 import { auth } from "@/auth";
-import { DisplayImage } from "@/components/elements";
+import { DisplayImage } from "@/components";
 import { useClose } from "@/components/elements/ModalButton";
+import SnackInfo from "@/components/elements/SnackInfo";
 import { useSpots, useTrips, useUpdateSpots } from "@/context";
 import { SpotType, TripType } from "@/types";
 import { getTrip, postSpotImage } from "@/utils/api";
@@ -17,11 +18,9 @@ interface PostSpotImageProps {
 }
 
 const PostSpotImage = ({ spot, src, children }: PostSpotImageProps) => {
-  const handleClose = useClose();
   const spots = useSpots();
   const setdSpots = useUpdateSpots();
   const spotid = spot.ID;
-  const trips = useTrips();
   const [trip, setTrip] = useState<TripType>();
   const fetchTrip = async () => {
     const _trip = await getTrip(spot.tripid);
@@ -42,27 +41,40 @@ const PostSpotImage = ({ spot, src, children }: PostSpotImageProps) => {
     const file = files[0];
     setFile(file);
   };
-  const [open, setOpen] = React.useState(false);
+  const [successOpen, setSuccessOpen] = React.useState(false);
 
-  const handleAlert = () => {
-    setOpen(true);
+  const handleSuccess = () => {
+    setSuccessOpen(true);
   };
-  const closeAlert = (event: React.SyntheticEvent | Event, reason?: string) => {
-    setOpen(false);
+  const closeSuccess = () => {
+    setSuccessOpen(false);
+  };
+
+  const [errorOpen, setErrorOpen] = React.useState(false);
+
+  const handleError = () => {
+    setErrorOpen(true);
+  };
+  const closeError = () => {
+    setErrorOpen(false);
   };
   const submit = async () => {
     if (file !== undefined && userid !== undefined) {
-      const updatedSpot = await postSpotImage(file, spotid, userid);
-      const spot = spots.filter((spot) => spot.ID === spotid)[0];
-      const arg = spots.indexOf(spot);
-      spots[arg] = updatedSpot;
-      setdSpots([...spots]);
-      handleAlert();
+      try {
+        const updatedSpot = await postSpotImage(file, spotid, userid);
+        const spot = spots.filter((spot) => spot.ID === spotid)[0];
+        const arg = spots.indexOf(spot);
+        spots[arg] = updatedSpot;
+        setdSpots([...spots]);
+        handleSuccess();
+      } catch (err) {
+        handleError();
+      }
     }
   };
   return (
     <>
-      <Box sx={{ textAlign: "center" }}>
+      <Box>
         <DisplayImage src={src} />
         {user?.uid === trip?.uid && (
           <>
@@ -82,18 +94,12 @@ const PostSpotImage = ({ spot, src, children }: PostSpotImageProps) => {
                 {children}
               </Button>
             </label>
-            <Snackbar
-              anchorOrigin={{ vertical: "top", horizontal: "center" }}
-              open={open}
-              autoHideDuration={6000}
-              onClose={closeAlert}
-            >
-              <Alert onClose={closeAlert} severity="success">
-                画像を
-                <br />
-                更新しました!
-              </Alert>
-            </Snackbar>
+            <SnackInfo
+              successOpen={successOpen}
+              closeSuccess={closeSuccess}
+              errorOpen={errorOpen}
+              closeError={closeError}
+            />
           </>
         )}
       </Box>

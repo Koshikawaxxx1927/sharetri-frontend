@@ -2,7 +2,7 @@ import { Theme } from "@emotion/react";
 import { SxProps } from "@mui/material";
 import Link from "next/link";
 import React from "react";
-import { ButtonElement } from "@/components/elements";
+import { ButtonElement } from "@/components";
 
 interface LinkButtonProps {
   text: string;

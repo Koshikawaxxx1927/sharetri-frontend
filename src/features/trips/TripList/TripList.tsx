@@ -1,7 +1,7 @@
 import { getPrefectureList } from "@/utils/api";
 import { PostTrip } from "@/features";
 import { Box, Grid } from "@mui/material";
-import { ModalButton } from "@/components/elements";
+import { ModalButton } from "@/components";
 
 interface TripListProps {
   children: React.ReactNode;

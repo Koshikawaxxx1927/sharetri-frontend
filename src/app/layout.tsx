@@ -1,4 +1,4 @@
-import { Header } from "@/components/elements";
+import { Header } from "@/components";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -19,14 +19,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} bg-slate-200`}>
-        {/* <LoginUserProvider> */}
         <TripProvider>
           <SpotProvider>
             <Header sx={{ marginBottom: "15px" }} />
             {children}
           </SpotProvider>
         </TripProvider>
-        {/* </LoginUserProvider> */}
       </body>
     </html>
   );

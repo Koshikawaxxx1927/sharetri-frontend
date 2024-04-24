@@ -34,7 +34,13 @@ const InfiniteScroll = <T,>({
     loader(batch);
   }, [batch]);
   return (
-    <>{array.length >= batch + arrayPerPage && <div ref={ref}>ref</div>}</>
+    <>
+      {array.length >= batch + arrayPerPage && (
+        <div ref={ref} className="opacity-0">
+          ref
+        </div>
+      )}
+    </>
   );
 };
 

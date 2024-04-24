@@ -1,7 +1,6 @@
 import { Box } from "@mui/material";
 import React from "react";
-import FilterIcon from "@mui/icons-material/Filter";
-import Image from "next/image";
+import { FilterImage } from "@/components";
 
 interface DisplayImageProps {
   src: string;
@@ -12,34 +11,13 @@ const DisplayImage = ({ src }: DisplayImageProps) => {
     <Box
       sx={{ textAlign: "center", position: "relative", marginBottom: "30px" }}
     >
-      {src === "" ? (
-        <FilterIcon
-          sx={{
-            height: "100px",
-            width: "100px",
-            display: "block",
-            margin: "0 auto",
-          }}
-        />
-      ) : (
-        <Box
-          sx={{
-            width: "100%",
-            height: "300px",
-            marign: "0 auto 20px",
-          }}
-        >
-          <Image
-            src={src}
-            fill
-            sizes="100vw"
-            style={{
-              objectFit: "contain",
-            }}
-            alt="旅行画像"
-          />
-        </Box>
-      )}
+      <FilterImage
+        src={src}
+        filterHeight="100px"
+        filterWidth="100px"
+        imageHeight="300px"
+        imageWidth="100%"
+      />
     </Box>
   );
 };

@@ -80,20 +80,6 @@ const DrawerMenu = ({ onClick }: DrawerMenuProps) => {
               </ListItemButton>
             </Link>
           </ListItem>
-          {/* {user && (
-            <>
-              <ListItem disablePadding>
-                <Link href="/mytrips">
-                  <ListItemButton sx={{ width: "250px" }}>
-                    <ListItemIcon>
-                      <CardTravelIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="自分の旅行一覧" />
-                  </ListItemButton>
-                </Link>
-              </ListItem>
-            </>
-          )} */}
         </List>
       </Box>
     </>

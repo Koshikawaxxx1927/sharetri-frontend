@@ -9,7 +9,7 @@ import {
   MenuList,
   Typography,
 } from "@mui/material";
-import { ButtonElement, UserIcon } from "@/components/elements";
+import { ButtonElement, UserIcon } from "@/components";
 import { auth } from "@/auth";
 import { getUser } from "@/utils/api";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -18,7 +18,7 @@ import { UserType } from "@/types";
 
 const AccountMenu = () => {
   const [user] = useAuthState(auth);
-  const [dbuser, setDbuser] = useState<UserType>();
+  // const [dbuser, setDbuser] = useState<UserType>();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -31,23 +31,21 @@ const AccountMenu = () => {
     setAnchorEl(null);
   };
 
-  const fetchDbuser = async () => {
-    //
-    if (user !== undefined && user) {
-      try {
-        const _dbuser = await getUser(user.uid);
-        setDbuser(_dbuser);
-      } catch (err) {
-        // Not Found
-      }
-    }
-  };
+  // const fetchDbuser = async () => {
+  //   if (user !== undefined && user) {
+  //     const _dbuser = await getUser(user.uid);
+  //     if (_dbuser === undefined) return;
+  //     setDbuser(_dbuser);
+  //   }
+  // };
 
-  useEffect(() => {
-    fetchDbuser();
-  }, [user]);
-  //
-  //
+  // useEffect(() => {
+  //   if (user !== undefined && user) {
+  //     fetchDbuser();
+  //   } else {
+  //     setDbuser(undefined);
+  //   }
+  // }, [user]);
   return (
     <>
       <IconButton onClick={handleClick} color="inherit" aria-label="account">
@@ -68,7 +66,7 @@ const AccountMenu = () => {
         <UserIcon src={user?.photoURL} fontsize={60} />
         <Divider sx={{ marginTop: "20px" }} />
         <Typography variant="body2" color="text.secondary">
-          {dbuser?.name}
+          {user?.displayName}
         </Typography>
         <Typography variant="body2" color="text.secondary">
           {user?.email}

@@ -3,13 +3,13 @@ import { FavoriteType } from "@/types";
 const postFavorite = async (
   uid: string,
   tripid: string
-): Promise<FavoriteType> => {
+): Promise<FavoriteType | undefined> => {
   const bodyData = {
     uid: uid,
     tripid: tripid.toString(),
   };
   const res = await fetch(
-    `http://localhost:8080/login/api/v1/${uid}/favorite`,
+    `${process.env.NEXT_PUBLIC_END_POINT}/${process.env.NEXT_PUBLIC_LOGIN_PATH}/${uid}/favorite`,
     {
       method: "POST",
       headers: {
@@ -19,30 +19,56 @@ const postFavorite = async (
       body: JSON.stringify(bodyData),
     }
   );
+  if (res.status === 401) {
+    return undefined;
+  }
   const data = await res.json();
-
-  return data.faovorite;
+  return data.favorite;
 };
 
 const getFavoriteByUidTripId = async (
   uid: string,
   tripid: string
-): Promise<FavoriteType> => {
-  const res = await fetch(`http://localhost:8080/favorite/${uid}/${tripid}`);
-  // if (res.status === 404) {
-  //   return null;
-  // }
+): Promise<FavoriteType | undefined> => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_END_POINT}/favorite/${uid}/${tripid}`
+    );
+    if (res.status === 404) {
+      return undefined;
+    }
+    const data = await res.json();
+
+    return data.favorite;
+  } catch (err) {
+    return undefined;
+  }
+};
+
+const existFavoriteByUidTripId = async (
+  uid: string,
+  tripid: string
+): Promise<boolean> => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_END_POINT}/favorite/exist/${uid}/${tripid}`
+  );
+  if (res.status === 404) {
+    return false;
+  }
   const data = await res.json();
 
   return data.favorite;
 };
 
 const getFavoritesByUid = async (uid: string): Promise<FavoriteType[]> => {
-  const res = await fetch(`http://localhost:8080/favorite/uid/${uid}`, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-    },
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_END_POINT}/favorite/uid/${uid}`,
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+      },
+    }
+  );
   const data = await res.json();
 
   return data.favorites;
@@ -51,11 +77,12 @@ const getFavoritesByUid = async (uid: string): Promise<FavoriteType[]> => {
 const getFavoritesByTripID = async (
   tripid: string
 ): Promise<FavoriteType[]> => {
-  const res = await fetch(`http://localhost:8080/favorite/tripid/${tripid}`, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-    },
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_END_POINT}/favorite/tripid/${tripid}`
+  );
+  if (res.status === 404) {
+    return [];
+  }
   const data = await res.json();
 
   return data.favorites;
@@ -66,7 +93,7 @@ const deleteFavoriteById = async (
   favoriteid: string
 ): Promise<FavoriteType> => {
   const res = await fetch(
-    `http://localhost:8080/login/api/v1/${uid}/favorite/${favoriteid}`,
+    `${process.env.NEXT_PUBLIC_END_POINT}/${process.env.NEXT_PUBLIC_LOGIN_PATH}/${uid}/favorite/${favoriteid}`,
     {
       method: "DELETE",
       headers: {
@@ -84,4 +111,5 @@ export {
   deleteFavoriteById,
   getFavoritesByTripID,
   getFavoriteByUidTripId,
+  existFavoriteByUidTripId,
 };

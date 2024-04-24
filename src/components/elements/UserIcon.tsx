@@ -1,7 +1,7 @@
 "use client";
 
 import { Box, SxProps, Theme } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Image from "next/image";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { red } from "@mui/material/colors";

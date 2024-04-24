@@ -11,11 +11,7 @@ import "swiper/css";
 import { SpotListTab, SpotFlowTab, PostSpot } from "@/features";
 import { getSpotList } from "@/utils/api";
 import { usePathname } from "next/navigation";
-import {
-  InfiniteScroll,
-  ModalButton,
-  OverflowScroll,
-} from "@/components/elements";
+import { InfiniteScroll, ModalButton, OverflowScroll } from "@/components";
 import { Grid } from "@mui/material";
 import { useSpots, useUpdateSpots } from "@/context";
 
@@ -91,7 +87,7 @@ function SpotTabs() {
             <SpotListTab value={value} />
           </SwiperSlide>
           <SwiperSlide>
-            <SpotFlowTab value={value} handleChange={handleChange} />
+            <SpotFlowTab value={value} />
           </SwiperSlide>
           <InfiniteScroll
             array={spots}

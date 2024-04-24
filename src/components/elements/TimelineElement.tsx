@@ -14,7 +14,6 @@ interface TimelineElementProps {
   endtime: string;
   name: string;
   memo: string;
-  // onChange: (event: React.SyntheticEvent, newValue: number) => void;
   children: React.ReactNode;
 }
 
@@ -23,18 +22,10 @@ const TimelineElement = ({
   endtime,
   name,
   memo,
-  // onChange,
   children,
 }: TimelineElementProps) => {
   return (
-    <TimelineItem
-      sx={[
-        {
-          // cursor: "pointer",
-        },
-        { "&:hover": { backgroundColor: "#eee" } },
-      ]}
-    >
+    <TimelineItem sx={[{ "&:hover": { backgroundColor: "#eee" } }]}>
       <TimelineOppositeContent
         sx={{ m: "auto 0", textAlign: "center" }}
         align="right"

@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import { Theme } from "@emotion/react";
 import { SxProps } from "@mui/material";
-import { MenuButton, AccountMenu } from "@/components/elements";
+import { MenuButton, AccountMenu } from "@/components";
 import Link from "next/link";
 import { Rampart_One } from "next/font/google";
 
@@ -36,7 +36,7 @@ export default function Header({ sx }: HeaderProps) {
             <MenuButton />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            <Link href="http://localhost:3000/">
+            <Link href="/">
               <span className={RampartOneFont.className}>Sharetri</span>
             </Link>
           </Typography>

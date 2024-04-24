@@ -4,9 +4,9 @@ import { Grid } from "@mui/material";
 import { Trip } from "@/features";
 import { PrefectureType } from "@/types";
 import { getTripList } from "@/utils/api";
-import { InfiniteScroll, OverflowScroll } from "@/components/elements";
+import { InfiniteScroll, OverflowScroll } from "@/components";
 import { useTrips, useUpdateTrips } from "@/context";
-import { useEffect, useLayoutEffect } from "react";
+import { useEffect } from "react";
 
 interface TripScrollProps {
   prefectures: PrefectureType[];

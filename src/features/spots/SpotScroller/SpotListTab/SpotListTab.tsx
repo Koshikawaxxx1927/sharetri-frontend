@@ -1,4 +1,4 @@
-import { TabPanel } from "@/components/elements";
+import { TabPanel } from "@/components";
 import React from "react";
 import SpotScroll from "../SpotScroll/SpotScroll";
 

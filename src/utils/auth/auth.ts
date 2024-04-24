@@ -1,11 +1,5 @@
 import { auth, provider } from "@/auth";
-import {
-  GoogleAuthProvider,
-  getRedirectResult,
-  signInWithPopup,
-  signInWithRedirect,
-  signOut,
-} from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 import { getUser, postUser } from "../api/user";
 import { postUserIcon } from "../api/user";
 
@@ -23,9 +17,8 @@ const signin = async () => {
 
     localStorage.setItem("jwt", idToken);
     let user;
-    try {
-      user = await getUser(result.user.uid);
-    } catch (err) {
+    user = await getUser(result.user.uid);
+    if (user === undefined) {
       await postUser(result.user.uid, result.user.displayName);
     }
     const usericonPath = result.user.photoURL?.toString();
@@ -35,11 +28,8 @@ const signin = async () => {
     const res = await fetch(usericonPath);
     const blob = await res.blob();
     const usericon = new File([blob], "image.png");
-    console.log("Before Usericon", result.user.uid);
     await postUserIcon(usericon, result.user.uid);
-    console.log("After Usericon");
   } catch (error) {
-    console.log("エラー内容", error);
     localStorage.removeItem("jwt");
     await signOut(auth);
   }

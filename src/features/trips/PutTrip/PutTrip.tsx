@@ -17,9 +17,8 @@ import {
   MultiTextForm,
   OverflowScroll,
   PulldownForm,
-  SwitchForm,
   TextForm,
-} from "@/components/elements";
+} from "@/components";
 import { useForm } from "react-hook-form";
 import { PrefectureType, TripType } from "@/types";
 import { putTrip } from "@/utils/api";
@@ -29,6 +28,7 @@ import { useTrips, useUpdateTrips } from "@/context";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/auth";
 import { useClose } from "@/components/elements/ModalButton";
+import SnackInfo from "@/components/elements/SnackInfo";
 
 interface PutTripProps {
   prefectures: PrefectureType[];
@@ -54,31 +54,44 @@ const PutTrip = ({ prefectures, trip }: PutTripProps) => {
   const userid = user?.uid;
   const submit = async (data: TripType) => {
     if (userid !== undefined) {
-      const updatedTrip = await putTrip(
-        userid,
-        trip.ID,
-        data.title,
-        data.startdate,
-        data.enddate,
-        data.prefectureid,
-        data.memo,
-        Boolean(data.ispublic),
-        trip.favorite
-      );
-      const arg = trips.indexOf(trip);
-      trips[arg] = updatedTrip;
-      setTrips([...trips]);
-      handleAlert();
+      try {
+        const updatedTrip = await putTrip(
+          userid,
+          trip.ID,
+          data.title,
+          data.startdate,
+          data.enddate,
+          data.prefectureid,
+          data.memo,
+          Boolean(data.ispublic),
+          trip.favorite
+        );
+        const arg = trips.indexOf(trip);
+        trips[arg] = updatedTrip;
+        setTrips([...trips]);
+        handleSuccess();
+      } catch (err) {
+        handleError();
+      }
     }
   };
 
-  const [open, setOpen] = React.useState(false);
+  const [successOpen, setSuccessOpen] = React.useState(false);
 
-  const handleAlert = () => {
-    setOpen(true);
+  const handleSuccess = () => {
+    setSuccessOpen(true);
   };
-  const closeAlert = (event: React.SyntheticEvent | Event, reason?: string) => {
-    setOpen(false);
+  const closeSuccess = () => {
+    setSuccessOpen(false);
+  };
+
+  const [errorOpen, setErrorOpen] = React.useState(false);
+
+  const handleError = () => {
+    setErrorOpen(true);
+  };
+  const closeError = () => {
+    setErrorOpen(false);
   };
 
   return (
@@ -95,18 +108,6 @@ const PutTrip = ({ prefectures, trip }: PutTripProps) => {
           </Typography>
 
           <form onSubmit={handleSubmit(submit)}>
-            {/* <Grid container>
-              <Grid item xs={7}></Grid>
-              <Grid item xs={5}>
-                <SwitchForm
-                  label="公開"
-                  name="ispublic"
-                  register={register}
-                  errors={errors.ispublic?.message}
-                  value={trip.ispublic}
-                />
-              </Grid>
-            </Grid> */}
             <Stack spacing={1}>
               <TextForm
                 label="タイトル"
@@ -156,18 +157,12 @@ const PutTrip = ({ prefectures, trip }: PutTripProps) => {
           </form>
         </OverflowScroll>
       </Container>
-      <Snackbar
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        open={open}
-        autoHideDuration={6000}
-        onClose={closeAlert}
-      >
-        <Alert onClose={closeAlert} severity="success">
-          旅行を
-          <br />
-          更新しました!
-        </Alert>
-      </Snackbar>
+      <SnackInfo
+        successOpen={successOpen}
+        closeSuccess={closeSuccess}
+        errorOpen={errorOpen}
+        closeError={closeError}
+      />
     </>
   );
 };

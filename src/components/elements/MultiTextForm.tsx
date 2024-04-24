@@ -40,6 +40,3 @@ const MultiTextForm = ({
 };
 
 export default MultiTextForm;
-// function useState(value: string | undefined): [any, any] {
-//   throw new Error("Function not implemented.");
-// }

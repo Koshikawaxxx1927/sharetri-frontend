@@ -3,8 +3,8 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
-import { SxProps, Theme, ZIndex } from "@mui/material";
-import { ButtonElement } from "@/components/elements";
+import { SxProps, Theme } from "@mui/material";
+import { ButtonElement } from "@/components";
 import { createContext } from "react";
 
 const style = {
@@ -65,10 +65,6 @@ export default function ModalButton({
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  // const additionalProps = {
-  //   handleClose: handleClose,
-  // };
-  // const newChildren = React.cloneElement(children, additionalProps);
   return (
     <>
       <ButtonElement

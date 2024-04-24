@@ -6,11 +6,14 @@ const getSpotList = async (
   limit: number
 ): Promise<SpotType[]> => {
   const res = await fetch(
-    `http://localhost:8080/spotlist/${tripid}?offset=${offset}&limit=${limit}`,
+    `${process.env.NEXT_PUBLIC_END_POINT}/spotlist/${tripid}?offset=${offset}&limit=${limit}`,
     {
       cache: "no-store",
     }
   );
+  if (res.status === 404) {
+    return [];
+  }
   const data = await res.json();
   data.spots.map((spot: SpotType) => {
     spot.starttime =
@@ -24,12 +27,17 @@ const getSpotList = async (
 };
 
 const getSpotImage = async (spotid: string): Promise<string> => {
-  const res = await fetch(`http://localhost:8080/spotimage/${spotid}`, {
-    // mode: "no-cors",消したらうまくいかない
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_END_POINT}/spotimage/${spotid}`,
+    {
+      // mode: "no-cors",消したらうまくいかない
+    }
+  );
+  if (res.status === 404) {
+    return "";
+  }
   const blob = await res.blob();
   const src = URL.createObjectURL(blob);
-  console.log("spot Src: ", src);
   return src;
 };
 
@@ -51,7 +59,7 @@ const postSpot = async (
     memo: memo,
   };
   const res = await fetch(
-    `http://localhost:8080/login/api/v1/${userid}/spot/${tripid}`,
+    `${process.env.NEXT_PUBLIC_END_POINT}/${process.env.NEXT_PUBLIC_LOGIN_PATH}/${userid}/spot/${tripid}`,
     {
       method: "POST",
       headers: {
@@ -89,7 +97,7 @@ const putSpot = async (
   };
 
   const res = await fetch(
-    `http://localhost:8080/login/api/v1/${userid}/spot/${spotid}`,
+    `${process.env.NEXT_PUBLIC_END_POINT}/${process.env.NEXT_PUBLIC_LOGIN_PATH}/${userid}/spot/${spotid}`,
     {
       method: "PUT",
       headers: {
@@ -112,7 +120,7 @@ const deleteSpot = async (
   spot: SpotType
 ): Promise<SpotType[]> => {
   const res = await fetch(
-    `http://localhost:8080/login/api/v1/${userid}/spot/${spot.ID}`,
+    `${process.env.NEXT_PUBLIC_END_POINT}/${process.env.NEXT_PUBLIC_LOGIN_PATH}/${userid}/spot/${spot.ID}`,
     {
       method: "DELETE",
       headers: {
@@ -136,7 +144,7 @@ const postSpotImage = async (
   const formData = new FormData();
   formData.append("image", spotimage, "image.png");
   const res = await fetch(
-    `http://localhost:8080/login/api/v1/${userid}/spotimage/${spotid}`,
+    `${process.env.NEXT_PUBLIC_END_POINT}/${process.env.NEXT_PUBLIC_LOGIN_PATH}/${userid}/spotimage/${spotid}`,
     {
       method: "POST",
       headers: {

@@ -1,8 +1,6 @@
 import { Box } from "@mui/material";
-import Image from "next/image";
 import React, { JSXElementConstructor } from "react";
-import FilterIcon from "@mui/icons-material/Filter";
-import { ModalButton } from ".";
+import { FilterImage, ModalButton } from "..";
 
 interface ShowImageProps {
   src: string;
@@ -42,34 +40,13 @@ const ShowImage = ({ src, children = <></> }: ShowImageProps) => {
           position: "absolute",
         }}
       >
-        {src === "" ? (
-          <FilterIcon
-            sx={{
-              height: "100px",
-              width: "100px",
-              display: "block",
-              zIndex: "1",
-            }}
-          />
-        ) : (
-          <Box
-            sx={{
-              width: "100%",
-              height: "100px",
-              zIndex: "1",
-            }}
-          >
-            <Image
-              src={src}
-              fill
-              sizes="100vw"
-              style={{
-                objectFit: "contain",
-              }}
-              alt="旅行画像"
-            />
-          </Box>
-        )}
+        <FilterImage
+          src={src}
+          filterHeight="100px"
+          filterWidth="100px"
+          imageHeight="100%"
+          imageWidth="100px"
+        />
       </Box>
     </Box>
   );

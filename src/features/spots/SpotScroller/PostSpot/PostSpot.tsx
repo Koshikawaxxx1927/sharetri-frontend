@@ -17,7 +17,7 @@ import {
   NumberForm,
   OverflowScroll,
   TextForm,
-} from "@/components/elements";
+} from "@/components";
 import { SpotType } from "@/types";
 import React from "react";
 import CloseIcon from "@mui/icons-material/Close";
@@ -26,6 +26,7 @@ import { useSpots, useUpdateSpots } from "@/context";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/auth";
 import { useClose } from "@/components/elements/ModalButton";
+import SnackInfo from "@/components/elements/SnackInfo";
 
 interface PostSpotProps {
   tripid: number;
@@ -52,31 +53,44 @@ const PostSpot = ({ tripid }: PostSpotProps) => {
 
   const submit = async (data: SpotType) => {
     if (user !== undefined && user) {
-      const spot = await postSpot(
-        user.uid,
-        tripid,
-        data.name,
-        data.starttime,
-        data.endtime,
-        data.cost,
-        data.memo
-      );
-      handleAlert();
-      if (!spots.includes(spot)) {
-        spots.push(spot);
-        spots.sort(starttimeSort);
-        setSpots([...spots]);
+      try {
+        const spot = await postSpot(
+          user.uid,
+          tripid,
+          data.name,
+          data.starttime,
+          data.endtime,
+          data.cost,
+          data.memo
+        );
+        handleSuccess();
+        if (!spots.includes(spot)) {
+          spots.push(spot);
+          spots.sort(starttimeSort);
+          setSpots([...spots]);
+        }
+      } catch (err) {
+        handleError();
       }
     }
   };
 
-  const [open, setOpen] = React.useState(false);
+  const [successOpen, setSuccessOpen] = React.useState(false);
 
-  const handleAlert = () => {
-    setOpen(true);
+  const handleSuccess = () => {
+    setSuccessOpen(true);
   };
-  const closeAlert = (event: React.SyntheticEvent | Event, reason?: string) => {
-    setOpen(false);
+  const closeSuccess = () => {
+    setSuccessOpen(false);
+  };
+
+  const [errorOpen, setErrorOpen] = React.useState(false);
+
+  const handleError = () => {
+    setErrorOpen(true);
+  };
+  const closeError = () => {
+    setErrorOpen(false);
   };
 
   return (
@@ -131,18 +145,12 @@ const PostSpot = ({ tripid }: PostSpotProps) => {
           </form>
         </OverflowScroll>
       </Container>
-      <Snackbar
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        open={open}
-        autoHideDuration={6000}
-        onClose={closeAlert}
-      >
-        <Alert onClose={closeAlert} severity="success">
-          旅行を
-          <br />
-          追加しました!
-        </Alert>
-      </Snackbar>
+      <SnackInfo
+        successOpen={successOpen}
+        closeSuccess={closeSuccess}
+        errorOpen={errorOpen}
+        closeError={closeError}
+      />
     </>
   );
 };

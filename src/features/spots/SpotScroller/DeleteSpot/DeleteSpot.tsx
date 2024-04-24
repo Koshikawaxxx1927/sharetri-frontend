@@ -14,10 +14,10 @@ interface DeleteSpotProps {
   spot: SpotType;
 }
 
-const closeButtonStyle = {
-  height: 0,
-  textAlign: "right",
-};
+// const closeButtonStyle = {
+//   height: 0,
+//   textAlign: "right",
+// };
 
 const DeleteSpot = ({ spot }: DeleteSpotProps) => {
   const handleClose = useClose();

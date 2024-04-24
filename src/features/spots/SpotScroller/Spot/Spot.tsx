@@ -5,11 +5,10 @@ import {
   CardDropDown,
   ImageCard,
   ModalButton,
-} from "@/components/elements";
+} from "@/components";
 import { SpotType, TripType } from "@/types";
 import { Box, Grid } from "@mui/material";
 import DeleteSpot from "../DeleteSpot/DeleteSpot";
-// import { useTrips, useUpdateTrips } from "@/context";
 import PutSpot from "../PutSpot/PutSpot";
 import PostSpotImage from "../../PostSpotImage/PostSpotImage";
 import { useEffect, useLayoutEffect, useState } from "react";
@@ -31,14 +30,9 @@ const Spot = ({ spot, spotname }: SpotProps) => {
   const [user] = useAuthState(auth);
   const [trip, setTrip] = useState<TripType>();
   const userid = user?.uid;
-  // const trips = useTrips();
-  // const setTrips = useUpdateTrips();
-  // .log("trips", trips);
   const fetchTrip = async () => {
-    // if (user !== undefined && user) {
     const _trip = await getTrip(spot.tripid);
     setTrip(_trip);
-    // }
   };
   useLayoutEffect(() => {
     fetchTrip();
@@ -48,7 +42,6 @@ const Spot = ({ spot, spotname }: SpotProps) => {
     setSrc(_src);
   };
   useEffect(() => {
-    console.log("UseEffect Spot");
     if (spot.imagepath !== "") {
       imageFetch(spot.ID);
     }
@@ -74,7 +67,7 @@ const Spot = ({ spot, spotname }: SpotProps) => {
               id={`Spot ID: ${spot.ID}`}
               start={spot.starttime.split("T")[1]}
               end={spot.endtime.split("T")[1]}
-              spot={spot.name}
+              cost={spot.name}
             />
             {userid === trip.uid && (
               <Grid
@@ -83,23 +76,24 @@ const Spot = ({ spot, spotname }: SpotProps) => {
                 spacing={2}
                 sx={{ marginBottom: "5px" }}
               >
-                <Grid item xs={4}>
+                <Grid item xs={4} sx={{ textAlign: "center" }}>
                   <ModalButton
                     variant="outlined"
                     color="error"
                     text="削除"
                     size="small"
+                    sx={{ width: "10px" }}
                   >
                     <DeleteSpot spot={spot} />
                   </ModalButton>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={4} sx={{ textAlign: "center" }}>
                   <ModalButton
                     text="更新"
                     variant="outlined"
                     size="small"
                     color="success"
-                    sx={{ width: "100%" }}
+                    sx={{ width: "10px" }}
                   >
                     <PutSpot spot={spot} />
                   </ModalButton>

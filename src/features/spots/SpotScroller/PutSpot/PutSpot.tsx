@@ -17,7 +17,7 @@ import {
   NumberForm,
   OverflowScroll,
   TextForm,
-} from "@/components/elements";
+} from "@/components";
 import { SpotType } from "@/types";
 import React from "react";
 import CloseIcon from "@mui/icons-material/Close";
@@ -27,6 +27,7 @@ import { usePathname } from "next/navigation";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/auth";
 import { useClose } from "@/components/elements/ModalButton";
+import SnackInfo from "@/components/elements/SnackInfo";
 
 interface PutSpotProps {
   spot: SpotType;
@@ -54,30 +55,42 @@ const PutSpot = ({ spot }: PutSpotProps) => {
 
   const submit = async (data: SpotType) => {
     if (userid !== undefined && tripid !== undefined) {
-      const updatedSpot = await putSpot(
-        userid,
-        tripid,
-        spot.ID,
-        data.name,
-        data.starttime,
-        data.endtime,
-        data.cost,
-        data.memo
-      );
-      const arg = spots.indexOf(spot);
-      spots[arg] = updatedSpot;
-      setSpots([...spots]);
-      handleAlert();
+      try {
+        const updatedSpot = await putSpot(
+          userid,
+          tripid,
+          spot.ID,
+          data.name,
+          data.starttime,
+          data.endtime,
+          data.cost,
+          data.memo
+        );
+        const arg = spots.indexOf(spot);
+        spots[arg] = updatedSpot;
+        setSpots([...spots]);
+        handleSuccess();
+      } catch (err) {
+        handleError();
+      }
     }
   };
 
-  const [open, setOpen] = React.useState(false);
-
-  const handleAlert = () => {
-    setOpen(true);
+  const [successOpen, setSuccessOpen] = React.useState(false);
+  const handleSuccess = () => {
+    setSuccessOpen(true);
   };
-  const closeAlert = (event: React.SyntheticEvent | Event, reason?: string) => {
-    setOpen(false);
+  const closeSuccess = () => {
+    setSuccessOpen(false);
+  };
+
+  const [errorOpen, setErrorOpen] = React.useState(false);
+
+  const handleError = () => {
+    setErrorOpen(true);
+  };
+  const closeError = () => {
+    setErrorOpen(false);
   };
 
   return (
@@ -137,18 +150,12 @@ const PutSpot = ({ spot }: PutSpotProps) => {
           </form>
         </OverflowScroll>
       </Container>
-      <Snackbar
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        open={open}
-        autoHideDuration={6000}
-        onClose={closeAlert}
-      >
-        <Alert onClose={closeAlert} severity="success">
-          スポットを
-          <br />
-          更新しました!
-        </Alert>
-      </Snackbar>
+      <SnackInfo
+        successOpen={successOpen}
+        closeSuccess={closeSuccess}
+        errorOpen={errorOpen}
+        closeError={closeError}
+      />
     </>
   );
 };

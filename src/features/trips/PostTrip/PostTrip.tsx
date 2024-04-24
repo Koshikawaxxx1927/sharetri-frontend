@@ -2,14 +2,11 @@
 
 import { useForm } from "react-hook-form";
 import {
-  Alert,
   Box,
   Button,
   Container,
-  Grid,
   IconButton,
   MenuItem,
-  Snackbar,
   Stack,
   Typography,
 } from "@mui/material";
@@ -18,9 +15,8 @@ import {
   MultiTextForm,
   OverflowScroll,
   PulldownForm,
-  SwitchForm,
   TextForm,
-} from "@/components/elements";
+} from "@/components";
 import { PrefectureType, TripType } from "@/types";
 import { postTrip } from "@/utils/api";
 import React from "react";
@@ -29,6 +25,7 @@ import { useTrips, useUpdateTrips } from "@/context";
 import { auth } from "@/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useClose } from "@/components/elements/ModalButton";
+import SnackInfo from "@/components/elements/SnackInfo";
 
 interface PostTripProps {
   prefectures: PrefectureType[];
@@ -53,31 +50,44 @@ const PostTrip = ({ prefectures }: PostTripProps) => {
 
   const submit = async (data: TripType) => {
     if (user) {
-      const trip = await postTrip(
-        user.uid,
-        data.title,
-        data.startdate,
-        data.enddate,
-        data.prefectureid,
-        data.memo,
-        Boolean(data.ispublic)
-      );
-      handleAlert();
+      try {
+        const trip = await postTrip(
+          user.uid,
+          data.title,
+          data.startdate,
+          data.enddate,
+          data.prefectureid,
+          data.memo,
+          Boolean(data.ispublic)
+        );
+        handleSuccess();
 
-      if (!trips.includes(trip)) {
-        trips.push(trip);
-        setTrips([...trips]);
+        if (!trips.includes(trip)) {
+          trips.push(trip);
+          setTrips([...trips]);
+        }
+      } catch (err) {
+        handleError();
       }
     }
   };
 
-  const [open, setOpen] = React.useState(false);
+  const [successOpen, setSuccessOpen] = React.useState(false);
 
-  const handleAlert = () => {
-    setOpen(true);
+  const handleSuccess = () => {
+    setSuccessOpen(true);
   };
-  const closeAlert = (event: React.SyntheticEvent | Event, reason?: string) => {
-    setOpen(false);
+  const closeSuccess = () => {
+    setSuccessOpen(false);
+  };
+
+  const [errorOpen, setErrorOpen] = React.useState(false);
+
+  const handleError = () => {
+    setErrorOpen(true);
+  };
+  const closeError = () => {
+    setErrorOpen(false);
   };
 
   return (
@@ -98,17 +108,6 @@ const PostTrip = ({ prefectures }: PostTripProps) => {
           </Typography>
 
           <form onSubmit={handleSubmit(submit)}>
-            {/* <Grid container>
-              <Grid item xs={7}></Grid>
-              <Grid item xs={5}>
-                <SwitchForm
-                  label="公開"
-                  name="ispublic"
-                  register={register}
-                  errors={errors.ispublic?.message}
-                />
-              </Grid>
-            </Grid> */}
             <Stack spacing={1}>
               <TextForm
                 label="タイトル"
@@ -153,18 +152,12 @@ const PostTrip = ({ prefectures }: PostTripProps) => {
           </form>
         </OverflowScroll>
       </Container>
-      <Snackbar
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        open={open}
-        autoHideDuration={6000}
-        onClose={closeAlert}
-      >
-        <Alert onClose={closeAlert} severity="success">
-          旅行を
-          <br />
-          追加しました!
-        </Alert>
-      </Snackbar>
+      <SnackInfo
+        successOpen={successOpen}
+        closeSuccess={closeSuccess}
+        errorOpen={errorOpen}
+        closeError={closeError}
+      />
     </>
   );
 };

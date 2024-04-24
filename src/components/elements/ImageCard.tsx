@@ -1,8 +1,8 @@
 "use client";
 
 import Card from "@mui/material/Card";
-import { Box, IconButton } from "@mui/material";
-import { ShowImage, CardHeader } from "@/components/elements";
+import { Box } from "@mui/material";
+import { ShowImage, CardHeader } from "@/components";
 import React from "react";
 
 interface CardTextProps {

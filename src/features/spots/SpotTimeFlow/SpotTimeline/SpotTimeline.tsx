@@ -1,20 +1,16 @@
 "use client";
 
 import Timeline from "@mui/lab/Timeline";
-import FastfoodIcon from "@mui/icons-material/Fastfood";
 import { timelineOppositeContentClasses } from "@mui/lab/TimelineOppositeContent";
-import { DayBorder, TimelineElement } from "@/components/elements";
-import { SpotType } from "@/types";
+import { TimelineElement } from "@/components";
 import { Box } from "@mui/material";
 import { useSpots } from "@/context";
-import TimelineDot from "@mui/lab/TimelineDot";
-import TimelineSeparator from "@mui/lab/TimelineSeparator";
 
 interface SpotTimelineProps {
-  onChange: (event: React.SyntheticEvent, newValue: number) => void;
+  // onChange: (event: React.SyntheticEvent, newValue: number) => void;
 }
 
-export default function SpotTimeline({ onChange }: SpotTimelineProps) {
+export default function SpotTimeline() {
   const spots = useSpots();
   return (
     <Timeline

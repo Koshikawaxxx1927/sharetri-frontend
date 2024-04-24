@@ -1,30 +1,8 @@
 "use client";
 
-import {
-  Alert,
-  Box,
-  Button,
-  Container,
-  Grid,
-  IconButton,
-  MenuItem,
-  Snackbar,
-  Stack,
-  Typography,
-} from "@mui/material";
-import {
-  DateForm,
-  MultiTextForm,
-  OverflowScroll,
-  PulldownForm,
-  SwitchForm,
-  TextForm,
-} from "@/components/elements";
-import { useForm } from "react-hook-form";
-import { PrefectureType, TripType } from "@/types";
-import { putTrip } from "@/utils/api";
+import { Button, Grid, Typography } from "@mui/material";
+import { TripType } from "@/types";
 import React from "react";
-import CloseIcon from "@mui/icons-material/Close";
 import { useTrips, useUpdateTrips } from "@/context";
 import { deleteTrip } from "@/utils/api/trip";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -34,11 +12,6 @@ import { useClose } from "@/components/elements/ModalButton";
 interface DeleteTripProps {
   trip: TripType;
 }
-
-const closeButtonStyle = {
-  height: 0,
-  textAlign: "right",
-};
 
 const DeleteTrip = ({ trip }: DeleteTripProps) => {
   const handleClose = useClose();
