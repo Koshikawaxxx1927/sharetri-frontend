@@ -71,6 +71,17 @@ const getUser = async (uid: string): Promise<UserType | undefined> => {
   return data.user;
 };
 
+const existUser = async (uid: string): Promise<boolean> => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_END_POINT}/user/exist/${uid}`
+  );
+  if (res.status === 404) {
+    return false;
+  }
+  const data = await res.json();
+  return data.user;
+};
+
 const getUserIcon = async (uid: string): Promise<string> => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_END_POINT}/usericon/${uid}`,
@@ -108,6 +119,7 @@ export {
   putUser,
   deleteLoginUser,
   getUser,
+  existUser,
   getUserIcon,
   postUserIcon,
 };

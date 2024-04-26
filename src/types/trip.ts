@@ -11,6 +11,5 @@ export default interface TripType {
   enddate: string;
   memo: string;
   imagepath: string;
-  ispublic: boolean;
   favorite: number;
 }

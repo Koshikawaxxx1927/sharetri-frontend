@@ -85,8 +85,7 @@ const postTrip = async (
   startdate: string,
   enddate: string,
   prefectureid: string,
-  memo: string,
-  ispublic: boolean
+  memo: string
 ): Promise<TripType> => {
   const bodyData = {
     prefectureid: `${prefectureid}`,
@@ -95,7 +94,6 @@ const postTrip = async (
     enddate: `${enddate}T00:00:00.000+09:00`,
     memo: memo,
     imagepath: "",
-    ispublic: ispublic,
   };
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_END_POINT}/${process.env.NEXT_PUBLIC_LOGIN_PATH}/${userid}/trip`,
@@ -135,7 +133,6 @@ const putTrip = async (
   enddate: string,
   prefectureid: string,
   memo: string,
-  ispublic: boolean,
   favorite: number
 ): Promise<TripType> => {
   const bodyData = {
@@ -144,7 +141,6 @@ const putTrip = async (
     startdate: `${startdate}T00:00:00.000+09:00`,
     enddate: `${enddate}T00:00:00.000+09:00`,
     memo: memo,
-    ispublic: ispublic,
     favorite: favorite,
   };
   const res = await fetch(

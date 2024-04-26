@@ -28,13 +28,16 @@ const FavoriteButton = ({ tripid }: FavoriteButtonProps) => {
 
   useEffect(() => {
     fetchFavoriteNumberByTripId(tripid);
-  }, []);
+  }, [user]);
 
   const fetchFavoriteNumberByTripId = async (tripid: string) => {
     const favoritesByTripId = await getFavoritesByTripID(tripid);
     if (favoritesByTripId.length === 0) return;
     setFavoriteNumberByTripId(favoritesByTripId.length);
-    if (!user || userid === undefined) return;
+    if (!user || userid === undefined) {
+      setIsFavorite(false);
+      return;
+    }
     const isExistFavoriteByUidTripId = await existFavoriteByUidTripId(
       userid,
       tripid

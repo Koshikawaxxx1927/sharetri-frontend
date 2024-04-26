@@ -1,6 +1,6 @@
 import { auth, provider } from "@/auth";
 import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
-import { getUser, postUser } from "../api/user";
+import { existUser, getUser, postUser } from "../api/user";
 import { postUserIcon } from "../api/user";
 
 const signin = async () => {
@@ -16,9 +16,8 @@ const signin = async () => {
     const idToken = await result.user.getIdToken();
 
     localStorage.setItem("jwt", idToken);
-    let user;
-    user = await getUser(result.user.uid);
-    if (user === undefined) {
+    const isExistUser = await existUser(result.user.uid);
+    if (!isExistUser) {
       await postUser(result.user.uid, result.user.displayName);
     }
     const usericonPath = result.user.photoURL?.toString();

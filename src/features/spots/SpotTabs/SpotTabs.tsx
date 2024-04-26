@@ -14,6 +14,7 @@ import { usePathname } from "next/navigation";
 import { InfiniteScroll, ModalButton, OverflowScroll } from "@/components";
 import { Grid } from "@mui/material";
 import { useSpots, useUpdateSpots } from "@/context";
+import ModalPostSpot from "../SpotScroller/ModalPostSpot/ModalPostSpot";
 
 function a11yProps(index: number) {
   return {
@@ -105,9 +106,7 @@ function SpotTabs() {
           direction="column"
         >
           <Grid item xs={12}>
-            <ModalButton text={"スポットを追加"}>
-              <PostSpot tripid={tripid} />
-            </ModalButton>
+            <ModalPostSpot tripid={tripid} />
           </Grid>
         </Grid>
       </Box>

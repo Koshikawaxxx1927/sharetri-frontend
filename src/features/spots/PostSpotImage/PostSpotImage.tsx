@@ -2,12 +2,11 @@
 
 import { auth } from "@/auth";
 import { DisplayImage } from "@/components";
-import { useClose } from "@/components/elements/ModalButton";
 import SnackInfo from "@/components/elements/SnackInfo";
-import { useSpots, useTrips, useUpdateSpots } from "@/context";
-import { SpotType, TripType } from "@/types";
+import { useSpots, useUpdateSpots } from "@/context";
+import { ColorType, SpotType, TripType } from "@/types";
 import { getTrip, postSpotImage } from "@/utils/api";
-import { Alert, Box, Button, Snackbar } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 
@@ -29,6 +28,7 @@ const PostSpotImage = ({ spot, src, children }: PostSpotImageProps) => {
   useEffect(() => {
     fetchTrip();
   }, []);
+  const [snack, setSnack] = useState<ColorType>({ color: "" });
 
   const [user] = useAuthState(auth);
   const userid = user?.uid;
@@ -41,23 +41,6 @@ const PostSpotImage = ({ spot, src, children }: PostSpotImageProps) => {
     const file = files[0];
     setFile(file);
   };
-  const [successOpen, setSuccessOpen] = React.useState(false);
-
-  const handleSuccess = () => {
-    setSuccessOpen(true);
-  };
-  const closeSuccess = () => {
-    setSuccessOpen(false);
-  };
-
-  const [errorOpen, setErrorOpen] = React.useState(false);
-
-  const handleError = () => {
-    setErrorOpen(true);
-  };
-  const closeError = () => {
-    setErrorOpen(false);
-  };
   const submit = async () => {
     if (file !== undefined && userid !== undefined) {
       try {
@@ -66,9 +49,9 @@ const PostSpotImage = ({ spot, src, children }: PostSpotImageProps) => {
         const arg = spots.indexOf(spot);
         spots[arg] = updatedSpot;
         setdSpots([...spots]);
-        handleSuccess();
+        setSnack({ color: "success" });
       } catch (err) {
-        handleError();
+        setSnack({ color: "error" });
       }
     }
   };
@@ -94,12 +77,7 @@ const PostSpotImage = ({ spot, src, children }: PostSpotImageProps) => {
                 {children}
               </Button>
             </label>
-            <SnackInfo
-              successOpen={successOpen}
-              closeSuccess={closeSuccess}
-              errorOpen={errorOpen}
-              closeError={closeError}
-            />
+            <SnackInfo snack={snack} setSnack={setSnack} />
           </>
         )}
       </Box>

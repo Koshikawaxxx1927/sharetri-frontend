@@ -9,7 +9,6 @@ import {
   LinkButton,
   ModalButton,
 } from "@/components";
-import PutTrip from "../PutTrip/PutTrip";
 import DeleteTrip from "../DeleteTrip/DeleteTrip";
 import { getTripImage } from "@/utils/api";
 import { useEffect, useState } from "react";
@@ -20,6 +19,7 @@ import { IconButton } from "@mui/material";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Link from "next/link";
 import { auth } from "@/auth";
+import ModalPutTrip from "../ModalPutTrip/ModalPutTrip";
 
 interface TripProps {
   trip: TripType;
@@ -84,15 +84,7 @@ const Trip = ({ trip, prefecture, prefectures }: TripProps) => {
           </Grid>
           <Grid item xs={3} sx={{ textAlign: "center" }}>
             {userid === trip?.uid && (
-              <ModalButton
-                text="更新"
-                variant="outlined"
-                size="small"
-                color="success"
-                sx={{ width: "10px" }}
-              >
-                <PutTrip prefectures={prefectures} trip={trip} />
-              </ModalButton>
+              <ModalPutTrip prefectures={prefectures} trip={trip} />
             )}
           </Grid>
           <Grid item xs={3} sx={{ textAlign: "center" }}>

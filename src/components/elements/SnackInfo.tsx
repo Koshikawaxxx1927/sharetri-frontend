@@ -1,19 +1,56 @@
+import { ColorType } from "@/types";
 import { Snackbar, Alert } from "@mui/material";
-import React from "react";
+import React, { Dispatch, SetStateAction, useEffect } from "react";
 
 interface SnackInfoProps {
-  successOpen: boolean;
-  closeSuccess: () => void;
-  errorOpen: boolean;
-  closeError: () => void;
+  // successOpen: boolean;
+  // closeSuccess: () => void;
+  // errorOpen: boolean;
+  // closeError: () => void;
+  snack: ColorType;
+  setSnack: Dispatch<SetStateAction<ColorType>>;
 }
 
 const SnackInfo = ({
-  successOpen,
-  closeSuccess,
-  errorOpen,
-  closeError,
-}: SnackInfoProps) => {
+  snack,
+  setSnack,
+}: // successOpen,
+// closeSuccess,
+// errorOpen,
+// closeError,
+SnackInfoProps) => {
+  const [successOpen, setSuccessOpen] = React.useState(false);
+  const handleSuccess = () => {
+    setSuccessOpen(true);
+  };
+  const closeSuccess = () => {
+    setSuccessOpen(false);
+  };
+
+  const [errorOpen, setErrorOpen] = React.useState(false);
+
+  const handleError = () => {
+    setErrorOpen(true);
+  };
+  const closeError = () => {
+    setErrorOpen(false);
+  };
+  useEffect(() => {
+    switch (snack.color) {
+      case "success":
+        handleSuccess();
+        setSnack({ color: "" });
+        break;
+      case "error":
+        handleError();
+        setSnack({ color: "" });
+        break;
+      // 必要に応じて他のケースも追加することができます
+      default:
+        // デフォルトの処理
+        break;
+    }
+  }, [snack]);
   return (
     <div>
       <Snackbar

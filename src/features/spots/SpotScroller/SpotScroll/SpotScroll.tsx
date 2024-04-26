@@ -1,7 +1,7 @@
 "use client";
 
 import { Grid } from "@mui/material";
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Spot } from "@/features";
 import { useSpots, useUpdateSpots } from "@/context";
 import { SpotType } from "@/types";

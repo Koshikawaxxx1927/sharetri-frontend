@@ -20,6 +20,7 @@ import {
 } from "./favorite";
 import {
   getUser,
+  existUser,
   getUserIcon,
   deleteLoginUser,
   putUser,

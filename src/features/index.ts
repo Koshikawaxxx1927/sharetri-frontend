@@ -13,6 +13,8 @@ import PutTrip from "./trips/PutTrip/PutTrip";
 import PutSpot from "./spots/SpotScroller/PutSpot/PutSpot";
 import PostTripImage from "./trips/PostTripImage/PostTripImage";
 import PostSpotImage from "./spots/PostSpotImage/PostSpotImage";
+import ModalPostTrip from "./trips/ModalPostTrip/ModalPostTrip";
+import ModalPutTrip from "./trips/ModalPutTrip/ModalPutTrip";
 
 export {
   Spot,
@@ -30,4 +32,6 @@ export {
   PutSpot,
   PostTripImage,
   PostSpotImage,
+  ModalPostTrip,
+  ModalPutTrip,
 };

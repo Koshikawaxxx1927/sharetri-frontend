@@ -17,18 +17,18 @@ import {
   PulldownForm,
   TextForm,
 } from "@/components";
-import { PrefectureType, TripType } from "@/types";
+import { ColorType, PrefectureType, TripType } from "@/types";
 import { postTrip } from "@/utils/api";
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { useTrips, useUpdateTrips } from "@/context";
 import { auth } from "@/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useClose } from "@/components/elements/ModalButton";
-import SnackInfo from "@/components/elements/SnackInfo";
 
 interface PostTripProps {
   prefectures: PrefectureType[];
+  setSnack: Dispatch<SetStateAction<ColorType>>;
 }
 
 const closeButtonStyle = {
@@ -36,7 +36,7 @@ const closeButtonStyle = {
   textAlign: "right",
 };
 
-const PostTrip = ({ prefectures }: PostTripProps) => {
+const PostTrip = ({ prefectures, setSnack }: PostTripProps) => {
   const handleClose = useClose();
   const {
     register,
@@ -57,37 +57,20 @@ const PostTrip = ({ prefectures }: PostTripProps) => {
           data.startdate,
           data.enddate,
           data.prefectureid,
-          data.memo,
-          Boolean(data.ispublic)
+          data.memo
         );
-        handleSuccess();
 
         if (!trips.includes(trip)) {
           trips.push(trip);
           setTrips([...trips]);
         }
+        setSnack({ color: "success" });
+        handleClose();
       } catch (err) {
-        handleError();
+        setSnack({ color: "error" });
+        handleClose();
       }
     }
-  };
-
-  const [successOpen, setSuccessOpen] = React.useState(false);
-
-  const handleSuccess = () => {
-    setSuccessOpen(true);
-  };
-  const closeSuccess = () => {
-    setSuccessOpen(false);
-  };
-
-  const [errorOpen, setErrorOpen] = React.useState(false);
-
-  const handleError = () => {
-    setErrorOpen(true);
-  };
-  const closeError = () => {
-    setErrorOpen(false);
   };
 
   return (
@@ -152,12 +135,6 @@ const PostTrip = ({ prefectures }: PostTripProps) => {
           </form>
         </OverflowScroll>
       </Container>
-      <SnackInfo
-        successOpen={successOpen}
-        closeSuccess={closeSuccess}
-        errorOpen={errorOpen}
-        closeError={closeError}
-      />
     </>
   );
 };

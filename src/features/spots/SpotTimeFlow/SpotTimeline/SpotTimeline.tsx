@@ -6,10 +6,6 @@ import { TimelineElement } from "@/components";
 import { Box } from "@mui/material";
 import { useSpots } from "@/context";
 
-interface SpotTimelineProps {
-  // onChange: (event: React.SyntheticEvent, newValue: number) => void;
-}
-
 export default function SpotTimeline() {
   const spots = useSpots();
   return (

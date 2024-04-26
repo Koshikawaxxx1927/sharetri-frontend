@@ -2,12 +2,10 @@
 
 import { useForm } from "react-hook-form";
 import {
-  Alert,
   Box,
   Button,
   Container,
   IconButton,
-  Snackbar,
   Stack,
   Typography,
 } from "@mui/material";
@@ -18,18 +16,18 @@ import {
   OverflowScroll,
   TextForm,
 } from "@/components";
-import { SpotType } from "@/types";
-import React from "react";
+import { ColorType, SpotType } from "@/types";
+import React, { Dispatch, SetStateAction } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { postSpot } from "@/utils/api";
 import { useSpots, useUpdateSpots } from "@/context";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/auth";
 import { useClose } from "@/components/elements/ModalButton";
-import SnackInfo from "@/components/elements/SnackInfo";
 
 interface PostSpotProps {
   tripid: number;
+  setSnack: Dispatch<SetStateAction<ColorType>>;
 }
 
 const closeButtonStyle = {
@@ -37,7 +35,7 @@ const closeButtonStyle = {
   textAlign: "right",
 };
 
-const PostSpot = ({ tripid }: PostSpotProps) => {
+const PostSpot = ({ tripid, setSnack }: PostSpotProps) => {
   const handleClose = useClose();
   const {
     register,
@@ -63,34 +61,18 @@ const PostSpot = ({ tripid }: PostSpotProps) => {
           data.cost,
           data.memo
         );
-        handleSuccess();
         if (!spots.includes(spot)) {
           spots.push(spot);
           spots.sort(starttimeSort);
           setSpots([...spots]);
         }
+        setSnack({ color: "success" });
+        handleClose();
       } catch (err) {
-        handleError();
+        setSnack({ color: "error" });
+        handleClose();
       }
     }
-  };
-
-  const [successOpen, setSuccessOpen] = React.useState(false);
-
-  const handleSuccess = () => {
-    setSuccessOpen(true);
-  };
-  const closeSuccess = () => {
-    setSuccessOpen(false);
-  };
-
-  const [errorOpen, setErrorOpen] = React.useState(false);
-
-  const handleError = () => {
-    setErrorOpen(true);
-  };
-  const closeError = () => {
-    setErrorOpen(false);
   };
 
   return (
@@ -145,12 +127,6 @@ const PostSpot = ({ tripid }: PostSpotProps) => {
           </form>
         </OverflowScroll>
       </Container>
-      <SnackInfo
-        successOpen={successOpen}
-        closeSuccess={closeSuccess}
-        errorOpen={errorOpen}
-        closeError={closeError}
-      />
     </>
   );
 };

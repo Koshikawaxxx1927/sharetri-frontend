@@ -19,6 +19,7 @@ import Link from "next/link";
 import { getTrip } from "@/utils/api";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/auth";
+import ModalPutSpot from "../ModalPutSpot/ModalPutTrip";
 
 interface SpotProps {
   spot: SpotType;
@@ -67,7 +68,7 @@ const Spot = ({ spot, spotname }: SpotProps) => {
               id={`Spot ID: ${spot.ID}`}
               start={spot.starttime.split("T")[1]}
               end={spot.endtime.split("T")[1]}
-              cost={spot.name}
+              cost={spot.cost}
             />
             {userid === trip.uid && (
               <Grid
@@ -88,15 +89,7 @@ const Spot = ({ spot, spotname }: SpotProps) => {
                   </ModalButton>
                 </Grid>
                 <Grid item xs={4} sx={{ textAlign: "center" }}>
-                  <ModalButton
-                    text="更新"
-                    variant="outlined"
-                    size="small"
-                    color="success"
-                    sx={{ width: "10px" }}
-                  >
-                    <PutSpot spot={spot} />
-                  </ModalButton>
+                  <ModalPutSpot spot={spot} />
                 </Grid>
               </Grid>
             )}

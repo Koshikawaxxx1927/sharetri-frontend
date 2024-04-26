@@ -8,7 +8,7 @@ interface CardContentsProps {
   start: string;
   end: string;
   spot?: string | undefined;
-  cost?: string | undefined;
+  cost?: number | undefined;
 }
 
 const CardContents = ({

@@ -1,14 +1,11 @@
 "use client";
 
 import {
-  Alert,
   Box,
   Button,
   Container,
-  Grid,
   IconButton,
   MenuItem,
-  Snackbar,
   Stack,
   Typography,
 } from "@mui/material";
@@ -20,19 +17,19 @@ import {
   TextForm,
 } from "@/components";
 import { useForm } from "react-hook-form";
-import { PrefectureType, TripType } from "@/types";
+import { ColorType, PrefectureType, TripType } from "@/types";
 import { putTrip } from "@/utils/api";
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { useTrips, useUpdateTrips } from "@/context";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/auth";
 import { useClose } from "@/components/elements/ModalButton";
-import SnackInfo from "@/components/elements/SnackInfo";
 
 interface PutTripProps {
   prefectures: PrefectureType[];
   trip: TripType;
+  setSnack: Dispatch<SetStateAction<ColorType>>;
 }
 
 const closeButtonStyle = {
@@ -40,7 +37,7 @@ const closeButtonStyle = {
   textAlign: "right",
 };
 
-const PutTrip = ({ prefectures, trip }: PutTripProps) => {
+const PutTrip = ({ prefectures, trip, setSnack }: PutTripProps) => {
   const handleClose = useClose();
   const {
     register,
@@ -63,35 +60,18 @@ const PutTrip = ({ prefectures, trip }: PutTripProps) => {
           data.enddate,
           data.prefectureid,
           data.memo,
-          Boolean(data.ispublic),
           trip.favorite
         );
         const arg = trips.indexOf(trip);
         trips[arg] = updatedTrip;
         setTrips([...trips]);
-        handleSuccess();
+        setSnack({ color: "success" });
+        handleClose();
       } catch (err) {
-        handleError();
+        setSnack({ color: "error" });
+        handleClose();
       }
     }
-  };
-
-  const [successOpen, setSuccessOpen] = React.useState(false);
-
-  const handleSuccess = () => {
-    setSuccessOpen(true);
-  };
-  const closeSuccess = () => {
-    setSuccessOpen(false);
-  };
-
-  const [errorOpen, setErrorOpen] = React.useState(false);
-
-  const handleError = () => {
-    setErrorOpen(true);
-  };
-  const closeError = () => {
-    setErrorOpen(false);
   };
 
   return (
@@ -157,12 +137,6 @@ const PutTrip = ({ prefectures, trip }: PutTripProps) => {
           </form>
         </OverflowScroll>
       </Container>
-      <SnackInfo
-        successOpen={successOpen}
-        closeSuccess={closeSuccess}
-        errorOpen={errorOpen}
-        closeError={closeError}
-      />
     </>
   );
 };

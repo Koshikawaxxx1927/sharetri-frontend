@@ -4,7 +4,7 @@ import { auth } from "@/auth";
 import { DisplayImage } from "@/components";
 import SnackInfo from "@/components/elements/SnackInfo";
 import { useTrips, useUpdateTrips } from "@/context";
-import { TripType } from "@/types";
+import { ColorType, TripType } from "@/types";
 import { postTripImage } from "@/utils/api";
 import { Button } from "@mui/material";
 import React, { useState } from "react";
@@ -18,6 +18,7 @@ interface PostTripImageProps {
 
 const PostTripImage = ({ trip, src = "", children }: PostTripImageProps) => {
   const trips = useTrips();
+  const [snack, setSnack] = useState<ColorType>({ color: "" });
   const tripid = trip.ID;
   const [user] = useAuthState(auth);
   const userid = user?.uid;
@@ -31,23 +32,6 @@ const PostTripImage = ({ trip, src = "", children }: PostTripImageProps) => {
     const file = files[0];
     setFile(file);
   };
-  const [successOpen, setSuccessOpen] = React.useState(false);
-
-  const handleSuccess = () => {
-    setSuccessOpen(true);
-  };
-  const closeSuccess = () => {
-    setSuccessOpen(false);
-  };
-
-  const [errorOpen, setErrorOpen] = React.useState(false);
-
-  const handleError = () => {
-    setErrorOpen(true);
-  };
-  const closeError = () => {
-    setErrorOpen(false);
-  };
   const submit = async () => {
     if (file !== undefined && userid !== undefined) {
       try {
@@ -56,9 +40,9 @@ const PostTripImage = ({ trip, src = "", children }: PostTripImageProps) => {
         const arg = trips.indexOf(trip);
         trips[arg] = updatedTrip;
         setTrips([...trips]);
-        handleSuccess();
+        setSnack({ color: "success" });
       } catch (err) {
-        handleError();
+        setSnack({ color: "error" });
       }
     }
   };
@@ -84,12 +68,7 @@ const PostTripImage = ({ trip, src = "", children }: PostTripImageProps) => {
               {children}
             </Button>
           </label>
-          <SnackInfo
-            successOpen={successOpen}
-            closeSuccess={closeSuccess}
-            errorOpen={errorOpen}
-            closeError={closeError}
-          />
+          <SnackInfo snack={snack} setSnack={setSnack} />
         </>
       )}
     </>

@@ -1,7 +1,13 @@
+// "use client";
 import { getPrefectureList } from "@/utils/api";
 import { PostTrip } from "@/features";
 import { Box, Grid } from "@mui/material";
 import { ModalButton } from "@/components";
+import { useState } from "react";
+import SnackInfo from "@/components/elements/SnackInfo";
+import { ColorType } from "@/types";
+import ModalTripPost from "../ModalPostTrip/ModalPostTrip";
+import ModalPostTrip from "../ModalPostTrip/ModalPostTrip";
 
 interface TripListProps {
   children: React.ReactNode;
@@ -9,6 +15,7 @@ interface TripListProps {
 
 const TripList = async ({ children }: TripListProps) => {
   const prefectures = await getPrefectureList();
+
   return (
     <Box>
       {children}
@@ -20,9 +27,7 @@ const TripList = async ({ children }: TripListProps) => {
           direction="column"
         >
           <Grid item xs={12}>
-            <ModalButton text={"旅行を追加"}>
-              <PostTrip prefectures={prefectures} />
-            </ModalButton>
+            <ModalPostTrip prefectures={prefectures} />
           </Grid>
         </Grid>
       </Box>
