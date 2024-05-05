@@ -47,7 +47,7 @@ interface BasicModalProps {
     | "info"
     | "warning"
     | undefined;
-  children: React.ReactElement;
+  children: React.ReactNode;
   variant?: "text" | "outlined" | "contained" | undefined;
 }
 

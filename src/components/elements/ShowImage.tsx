@@ -4,10 +4,11 @@ import { FilterImage, ModalButton } from "..";
 
 interface ShowImageProps {
   src: string;
-  children?: React.ReactElement<any, string | JSXElementConstructor<any>>;
+  // children?: React.ReactElement<any, string | JSXElementConstructor<any>>;
+  children: React.ReactNode;
 }
 
-const ShowImage = ({ src, children = <></> }: ShowImageProps) => {
+const ShowImage = ({ src, children }: ShowImageProps) => {
   return (
     <Box
       sx={[

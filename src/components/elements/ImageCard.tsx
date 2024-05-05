@@ -33,6 +33,9 @@ export default function ImageCard({
       >
         <CardHeader uid={uid} title={title} createdat={createdat} />
         <ShowImage src={src} children={PostComponent} />
+        {/* <ShowImage src={src}>
+          <PostComponent />
+        </ShowImage> */}
         {children}
       </Box>
     </Card>
