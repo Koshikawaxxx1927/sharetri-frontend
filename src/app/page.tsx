@@ -4,9 +4,9 @@ import Box from "@mui/material/Box";
 import Carousel from "react-material-ui-carousel";
 import ArrowBackIosSharpIcon from "@mui/icons-material/ArrowBackIosSharp";
 import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
-import Slide1 from "@/../public/images/slide1.jpg";
-import Slide2 from "@/../public/images/slide2.jpg";
-import Slide3 from "@/../public/images/slide3.jpg";
+// import Slide1 from "@/../public/images/slide1.jpg";
+// import Slide2 from "@/../public/images/slide2.jpg";
+// import Slide3 from "@/../public/images/slide3.jpg";
 import Image from "next/image";
 import { LinkButton } from "@/components";
 
@@ -63,7 +63,7 @@ export default function page() {
       >
         <Box position="relative" sx={{ height: "60vh" }}>
           <Image
-            src={Slide1}
+            src="/images/slide1.jpg"
             fill
             style={{
               objectFit: "contain",
@@ -75,7 +75,7 @@ export default function page() {
         </Box>
         <Box position="relative" sx={{ height: "60vh" }}>
           <Image
-            src={Slide2}
+            src="/images/slide2.jpg"
             fill
             style={{
               objectFit: "contain",
@@ -87,7 +87,7 @@ export default function page() {
         </Box>
         <Box position="relative" sx={{ height: "60vh" }}>
           <Image
-            src={Slide3}
+            src="/images/slide3.jpg"
             fill
             style={{
               objectFit: "contain",
