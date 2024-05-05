@@ -18,6 +18,7 @@ const CardHeader = ({ uid, title, createdat }: CardHeaderProps) => {
   const [usericonSrc, setUsericonSrc] = useState("");
   const fetchUser = async () => {
     const _dbuser = await getUser(uid);
+    if (_dbuser === undefined) return;
     setDbuser(_dbuser);
     if (_dbuser.iconpath !== "") {
       const _usericonSrc = await getUserIcon(uid);
