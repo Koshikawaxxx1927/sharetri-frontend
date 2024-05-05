@@ -50,7 +50,7 @@ export default function page() {
           },
         }}
         navButtonsProps={{
-          //矢印ボタンの設定
+          //矢印ボタン
           style: {
             color: ArrowColor, //矢印の色
             backgroundColor: ArrowColor_bg, //矢印の背景の色
