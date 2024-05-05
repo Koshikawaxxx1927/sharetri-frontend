@@ -4,9 +4,6 @@ import Box from "@mui/material/Box";
 import Carousel from "react-material-ui-carousel";
 import ArrowBackIosSharpIcon from "@mui/icons-material/ArrowBackIosSharp";
 import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
-// import Slide1 from "@/../public/images/slide1.JPG";
-// import Slide2 from "@/../public/images/slide2.JPG";
-// import Slide3 from "@/../public/images/slide3.JPG";
 import Image from "next/image";
 import { LinkButton } from "@/components";
 
