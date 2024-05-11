@@ -1,19 +1,5 @@
 import { TripType } from "@/types/index";
 
-// const getAllTripList = async (): Promise<TripType[]> => {
-//   const res = await fetch("${process.env.NEXT_PUBLIC_END_POINT}/tripalllist", {
-//     cache: "no-store",
-//   });
-//   const data = await res.json();
-//   data.trips.map((trip: TripType) => {
-//     trip.startdate = trip.startdate.split("T")[0];
-//   });
-//   data.trips.map((trip: TripType) => {
-//     trip.enddate = trip.enddate.split("T")[0];
-//   });
-//   return data.trips;
-// };
-
 const getTripList = async (
   offset: number,
   limit: number
@@ -36,33 +22,6 @@ const getTripList = async (
   });
   return data.trips;
 };
-
-// const getMyTripList = async (
-//   userid: string,
-//   offset: number,
-//   limit: number
-// ): Promise<TripType[]> => {
-//   const res = await fetch(
-//     `${process.env.NEXT_PUBLIC_END_POINT}/${process.env.NEXT_PUBLIC_LOGIN_PATH}/${userid}/triplist?offset=${offset}&limit=${limit}`,
-//     {
-//       cache: "no-store",
-//       headers: {
-//         Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-//       },
-//     }
-//   );
-//   const data = await res.json();
-//   if (data.trips === undefined) {
-//     return [];
-//   }
-//   data.trips.map((trip: TripType) => {
-//     trip.startdate = trip.startdate.split("T")[0];
-//   });
-//   data.trips.map((trip: TripType) => {
-//     trip.enddate = trip.enddate.split("T")[0];
-//   });
-//   return data.trips;
-// };
 
 const getTripImage = async (tripid: string): Promise<string> => {
   const res = await fetch(
@@ -203,7 +162,6 @@ const postTripImage = async (
 };
 
 export {
-  // getAllTripList,
   getTripList,
   getTripImage,
   postTrip,
@@ -211,5 +169,4 @@ export {
   deleteTrip,
   postTripImage,
   getTrip,
-  // getMyTripList,
 };

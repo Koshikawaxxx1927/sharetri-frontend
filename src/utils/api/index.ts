@@ -1,13 +1,11 @@
 import { getPrefecture, getPrefectureList } from "./prefecture";
 import {
-  // getAllTripList,
   getTripList,
   getTripImage,
   postTrip,
   putTrip,
   postTripImage,
   getTrip,
-  // getMyTripList,
 } from "./trip";
 import { getSpotList, postSpot, putSpot, postSpotImage } from "./spot";
 import {
@@ -30,7 +28,6 @@ import {
 export {
   getPrefecture,
   getPrefectureList,
-  // getAllTripList,
   getTripList,
   getTripImage,
   getSpotList,
@@ -52,6 +49,4 @@ export {
   getTrip,
   getFavoriteByUidTripId,
   existFavoriteByUidTripId,
-  // fetchUserFromGoogle,
-  // getMyTripList,
 };
