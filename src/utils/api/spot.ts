@@ -58,7 +58,6 @@ const postSpot = async (
     cost: Number(cost),
     memo: memo,
   };
-  console.log("BOFY: ", bodyData);
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_END_POINT}/${process.env.NEXT_PUBLIC_LOGIN_PATH}/${userid}/spot/${tripid}`,
     {

@@ -17,7 +17,7 @@ const NumberForm = ({
   name,
   register,
   errors,
-  value = 0,
+  value = undefined,
 }: NumberFormProps) => {
   const [number, setNumber] = useState(value);
   const changeHandler = (
