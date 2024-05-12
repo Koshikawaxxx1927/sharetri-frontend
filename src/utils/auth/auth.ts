@@ -1,6 +1,6 @@
 import { auth, provider } from "@/auth";
 import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
-import { existUser, getUser, postUser } from "../api/user";
+import { existUser, postUser } from "../api/user";
 import { postUserIcon } from "../api/user";
 
 const signin = async () => {
