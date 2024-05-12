@@ -52,6 +52,7 @@ const PostSpot = ({ tripid, setSnack }: PostSpotProps) => {
   const submit = async (data: SpotType) => {
     if (user !== undefined && user) {
       try {
+        console.log("Cost: ", data.cost);
         const spot = await postSpot(
           user.uid,
           tripid,

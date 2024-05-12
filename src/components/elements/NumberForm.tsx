@@ -17,9 +17,9 @@ const NumberForm = ({
   name,
   register,
   errors,
-  value,
+  value = 0,
 }: NumberFormProps) => {
-  const [number, setNumber] = useState(0);
+  const [number, setNumber] = useState(value);
   const changeHandler = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
