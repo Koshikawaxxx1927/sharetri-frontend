@@ -53,8 +53,8 @@ const postSpot = async (
   const bodyData = {
     tripid: `${tripid}`,
     name: name,
-    starttime: `${starttime}:00.000+09:00`,
-    endtime: `${endtime}:00.000+09:00`,
+    starttime: `${starttime}:00.000+00:00`,
+    endtime: `${endtime}:00.000+00:00`,
     cost: Number(cost),
     memo: memo,
   };
