@@ -58,7 +58,6 @@ const postSpot = async (
     cost: Number(cost),
     memo: memo,
   };
-  console.log("BODY: ", bodyData);
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_END_POINT}/${process.env.NEXT_PUBLIC_LOGIN_PATH}/${userid}/spot/${tripid}`,
     {
@@ -91,8 +90,8 @@ const putSpot = async (
   const bodyData = {
     tripid: `${tripid}`,
     name: name,
-    starttime: `${starttime}:00.000+09:00`,
-    endtime: `${endtime}:00.000+09:00`,
+    starttime: `${starttime}:00.000+00:00`,
+    endtime: `${endtime}:00.000+00:00`,
     cost: Number(cost),
     memo: memo,
   };

@@ -49,8 +49,8 @@ const postTrip = async (
   const bodyData = {
     prefectureid: `${prefectureid}`,
     title: title,
-    startdate: `${startdate}T00:00:00.000+09:00`,
-    enddate: `${enddate}T00:00:00.000+09:00`,
+    startdate: `${startdate}T00:00:00.000+00:00`,
+    enddate: `${enddate}T00:00:00.000+00:00`,
     memo: memo,
     imagepath: "",
   };
@@ -97,8 +97,8 @@ const putTrip = async (
   const bodyData = {
     prefectureid: `${prefectureid}`,
     title: title,
-    startdate: `${startdate}T00:00:00.000+09:00`,
-    enddate: `${enddate}T00:00:00.000+09:00`,
+    startdate: `${startdate}T00:00:00.000+00:00`,
+    enddate: `${enddate}T00:00:00.000+00:00`,
     memo: memo,
     favorite: favorite,
   };
