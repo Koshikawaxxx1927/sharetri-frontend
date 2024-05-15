@@ -68,7 +68,6 @@ const getUser = async (uid: string): Promise<UserType | undefined> => {
     return undefined;
   }
   const data = await res.json();
-  console.log("User: ", data.user);
   return data.user;
 };
 
