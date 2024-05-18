@@ -37,8 +37,8 @@ URL: https://sharetri-frontend.vercel.app
 
 旅行先で行ったスポットをあげることでオススメスポットを自慢しちゃいましょう。
 
-<img width="320" alt="スクリーンショット 2024-05-18 10 16 49" src="https://github.com/Koshikawaxxx1927/sharetri-frontend/assets/89830436/8d1c06a3-e4e0-4006-acf3-1415be33d528">
 <img width="320" alt="スクリーンショット 2024-05-18 10 18 21" src="https://github.com/Koshikawaxxx1927/sharetri-frontend/assets/89830436/f7f1cd4b-25ca-49c9-a990-075c4df5952e">
+<img width="320" alt="スクリーンショット 2024-05-18 10 16 49" src="https://github.com/Koshikawaxxx1927/sharetri-frontend/assets/89830436/8d1c06a3-e4e0-4006-acf3-1415be33d528">
 
 ### 4. 旅行先やスポットで撮った写真をあげる
 
@@ -80,6 +80,12 @@ URL: https://sharetri-frontend.vercel.app
 検討技術: jQuery
 - 技術としてjQueryが古くなってきてしまっているため
 - 先輩にNext.jsを使用して開発を行っている人がいて、質問しやすかったため
+
+### インフラ: Vercel / Heroku
+
+検討技術: AWS (Amazon Web Service)
+- 従量課金制でいくらかかかるのかが予想しにくいため
+- 理想のインフラとしてRoute53、ACM、ECR、ECS、S3、ALBを使用したかったが、予算オーバのため断念。(勉強をして1日だけ実装した)
 
 ### 認証: Firebase Authentication
 
