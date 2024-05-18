@@ -18,6 +18,8 @@ URL: https://sharetri-frontend.vercel.app
 
 1. アカウントにサインイン
 
+https://github.com/Koshikawaxxx1927/sharetri-frontend/assets/89830436/481518f8-bd48-44ac-9bf7-6f45e1b2fff5
+
 2. 旅行先を登録
 
 3. 旅行先で訪れたスポットの登録
