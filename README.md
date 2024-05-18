@@ -23,6 +23,9 @@ URL: https://sharetri-frontend.vercel.app
 
 2. 旅行先を登録
 
+<img width="680" alt="スクリーンショット 2024-05-18 10 13 50" src="https://github.com/Koshikawaxxx1927/sharetri-frontend/assets/89830436/d42ccab3-8b7d-458f-8ca4-89bdf132b215">
+<img width="678" alt="スクリーンショット 2024-05-18 10 12 44" src="https://github.com/Koshikawaxxx1927/sharetri-frontend/assets/89830436/9af06296-9b56-4983-a920-a71e8ec12b2f">
+
 3. 旅行先で訪れたスポットの登録
 
 4. 旅行先やスポットで撮った写真をあげる
