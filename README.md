@@ -50,8 +50,8 @@ URL: https://sharetri-frontend.vercel.app
 
 おもしろい旅行先には、画面左下のお気に入りボタンを押してあげましょう。
 
-<img width="320" alt="スクリーンショット 2024-05-18 10 31 01" src="https://github.com/Koshikawaxxx1927/sharetri-frontend/assets/89830436/ebbc331a-b3aa-4cac-add9-158fca1b22b8">
 <img width="320" alt="スクリーンショット 2024-05-18 10 30 32" src="https://github.com/Koshikawaxxx1927/sharetri-frontend/assets/89830436/419d6c1a-1cda-4944-a699-dbed0a91236a">
+<img width="320" alt="スクリーンショット 2024-05-18 10 30 01" src="https://github.com/Koshikawaxxx1927/sharetri-frontend/assets/89830436/ebbc331a-b3aa-4cac-add9-158fca1b22b8">
 
 ## 主な使用技術
 
