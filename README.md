@@ -16,7 +16,7 @@ URL: https://sharetri-frontend.vercel.app
 
 ## メイン機能の使い方
 
-1. アカウントにサインイン
+1. 画面右上のアイコンボタンからアカウントにサインイン
 
 <img width="316" alt="スクリーンショット 2024-05-18 10 04 53" src="https://github.com/Koshikawaxxx1927/sharetri-frontend/assets/89830436/481518f8-bd48-44ac-9bf7-6f45e1b2fff5">
 <img width="330" alt="スクリーンショット 2024-05-18 10 06 17" src="https://github.com/Koshikawaxxx1927/sharetri-frontend/assets/89830436/63cb2147-b850-40c7-bcf8-202522cb2797">
