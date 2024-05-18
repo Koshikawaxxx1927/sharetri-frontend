@@ -1,34 +1,40 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Sharetri アプリ
 
-## Getting Started
+URL: https://sharetri-frontend.vercel.app
 
-First, run the development server:
+## 開発背景
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+コロナの規制も緩和され、学会や旅行で日本中様々な場所に行く機会が増えてきました。そんな中、旅慣れしている人がお勧めしてくれる場所は、どこも行ってよかったと思える場所でした。そんな場所を共有するためこのWebアプリを作成しました。この共有には写真や行った日付、かかった費用を含みます。利用者にはできるだけベストな写真を貼っていただき、その場所の良さを伝えてもらえると嬉しいです。
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 工夫した点
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. ウィンドウサイズに応じてグリッドの配置を変えることで、PC、スマートフォンで使用しやすいようにしました。
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+2. 画像の読み込みを遅くすることでページ全体の読み込みを早くしました。
 
-## Learn More
+3. 常にインテラクティブな操作を実現するため、クライアント側で値の更新、取得を実行しました。
 
-To learn more about Next.js, take a look at the following resources:
+## メイン機能の使い方
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. アカウントにサインイン
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+2. 旅行先を登録
 
-## Deploy on Vercel
+3. 旅行先で訪れたスポットの登録
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+4. 旅行先やスポットで撮った写真をあげる
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## 主な使用技術
+
+バックエンド: go v1.21  gin v1.9.1  gorm v1.25.8
+
+- データベース: MySQL
+
+フロントエンド: Typescript v5.3.3 React v18.2.0  Nextjs v14.1.0
+
+インフラ: Vercel / Heroku
+
+環境構築: Docker / Docker compose
+
+認証: Firebase Authentication
+
