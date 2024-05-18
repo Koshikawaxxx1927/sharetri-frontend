@@ -1,5 +1,8 @@
 # Sharetri アプリ
 
+旅行先のオススメスポット共有アプリ
+写真や実際に旅行したときの工程表をもとに楽しかった思い出を共有しましょう！
+
 URL: https://sharetri-frontend.vercel.app
 
 ## 開発背景
@@ -32,6 +35,8 @@ URL: https://sharetri-frontend.vercel.app
 <img width="320" alt="スクリーンショット 2024-05-18 10 18 21" src="https://github.com/Koshikawaxxx1927/sharetri-frontend/assets/89830436/f7f1cd4b-25ca-49c9-a990-075c4df5952e">
 
 4. 旅行先やスポットで撮った写真をあげる
+
+<img width="320" alt="スクリーンショット 2024-05-18 10 21 35" src="https://github.com/Koshikawaxxx1927/sharetri-frontend/assets/89830436/9ed90104-e47d-4527-8617-6570d709a87d">
 
 ## 主な使用技術
 
