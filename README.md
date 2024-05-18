@@ -80,3 +80,9 @@ URL: https://sharetri-frontend.vercel.app
 検討技術: jQuery
 - 技術としてjQueryが古くなってきてしまっているため
 - 先輩にNext.jsを使用して開発を行っている人がいて、質問しやすかったため
+
+### 認証: Firebase Authentication
+
+検討技術: ginを使用したJWT認証
+- セキュリティを考慮し、ユーザのデータをデータベースに保存しないようにするため
+- ソーシャルログインを簡単に実装するため
