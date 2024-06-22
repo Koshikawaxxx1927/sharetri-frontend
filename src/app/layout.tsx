@@ -9,6 +9,16 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Sharetri",
   description: "Let's share your memory",
+  openGraph: {
+    title: {
+      default: "Sharetri",
+      template: `%s | Sharetri`,
+    },
+    description: "Let's share your memory",
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
 };
 
 export default function RootLayout({
