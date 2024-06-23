@@ -1,12 +1,14 @@
-import { Header } from "@/components";
+import { Footer, Header } from "@/components";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { SpotProvider, TripProvider } from "@/context";
+import { Box } from "@mui/material";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("http://localhost:3000"),
   title: "Sharetri",
   description: "Let's share your memory",
   openGraph: {
@@ -35,6 +37,7 @@ export default function RootLayout({
             {children}
           </SpotProvider>
         </TripProvider>
+        <Footer />
       </body>
     </html>
   );

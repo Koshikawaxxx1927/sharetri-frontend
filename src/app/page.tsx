@@ -6,6 +6,14 @@ import ArrowBackIosSharpIcon from "@mui/icons-material/ArrowBackIosSharp";
 import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
 import Image from "next/image";
 import { LinkButton } from "@/components";
+import { Rampart_One } from "next/font/google";
+import { Typography } from "@mui/material";
+import Container from "@mui/material/Container";
+
+const RampartOneFont = Rampart_One({
+  weight: "400",
+  subsets: ["latin"],
+});
 
 const ArrowColor = "blue";
 const ArrowColor_bg = "white";
@@ -95,7 +103,7 @@ export default function page() {
           />
         </Box>
       </Carousel>
-      <Box sx={{ textAlign: "center" }}>
+      <Box sx={{ textAlign: "center", marginTop: "30px" }}>
         <LinkButton
           text="旅の共有を始める!"
           href="/trips"
@@ -103,6 +111,21 @@ export default function page() {
           textVariant="h4"
         />
       </Box>
+      <Typography
+        variant="h4"
+        align="center"
+        component="div"
+        color="black"
+        sx={{ flexGrow: 1, margin: "40px 0 20px" }}
+      >
+        <span className={RampartOneFont.className}>Sharetri</span>
+      </Typography>
+      <Container maxWidth="md" sx={{ marginY: "20px" }}>
+        <Typography>
+          「旅慣れした人のおすすめスポットを知りたい!」という思いから作られた旅行先共有サービスです。
+          画像を使用してスポットを共有することが。旅行先の魅力を効果的に伝えられます。
+        </Typography>
+      </Container>
     </Box>
   );
 }

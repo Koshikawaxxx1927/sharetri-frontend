@@ -26,6 +26,8 @@ import DisplayImage from "./elements/DisplayImage";
 import UserIcon from "./elements/UserIcon";
 import AccountMenu from "./layout/AccountMenu";
 import FilterImage from "./elements/FilterImage";
+import Footer from "./layout/Footer";
+import ColoredLine from "./elements/ColoredLine";
 
 export {
   ImageCard,
@@ -56,4 +58,6 @@ export {
   UserIcon,
   AccountMenu,
   FilterImage,
+  Footer,
+  ColoredLine,
 };
